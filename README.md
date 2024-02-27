@@ -1043,3 +1043,21 @@ LOW: Tue Feb 27 09:45:24 2024 - time_keeper - getMineTime() = 0
 LOW: Tue Feb 27 09:45:24 2024 - truck - mine() end
 LOW: Tue Feb 27 09:45:24 2024 - truck - drive() begin
 ```
+
+# Add CLI Args w/ Help
+
+```
+➜  vast git:(main) ✗ bazel build :main && ./bazel-bin/main --help
+INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
+INFO: Found 1 target...
+Target //:main up-to-date:
+  bazel-bin/main
+INFO: Elapsed time: 0.087s, Critical Path: 0.00s
+INFO: 1 process: 1 internal.
+INFO: Build completed successfully, 1 total action
+Usage: main [options...]
+Options:
+    -t, --trucks           quantity of mining trucks (Required)
+    -q, --queues           quantity of unloading queues (Required)
+    -h, --help             Shows this page
+```

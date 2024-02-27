@@ -6,6 +6,11 @@ cc_library(
 )
 
 cc_library(
+    name = "argparse",
+    hdrs = ["argparse.h"],
+)
+
+cc_library(
     name = "joining_thread",
     hdrs = ["joining_thread.h"],
 )
@@ -42,6 +47,7 @@ cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     deps = [
+        ":argparse",
         ":joining_thread",
         ":logger",
         ":storage_station",
