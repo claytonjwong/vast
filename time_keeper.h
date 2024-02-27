@@ -18,15 +18,24 @@ public:
     time_keeper& operator=(const time_keeper&&) = delete;
     std::chrono::hours getMineTime() {
         auto time = _getMineTime() * _time_ratio;
-        return std::chrono::duration_cast<std::chrono::hours>(std::chrono::duration<double>(time));
+        auto result = std::chrono::duration_cast<std::chrono::hours>(std::chrono::duration<double>(time));
+        logger::log(logger::log_level::low, "time_keeper", "getMineTime() raw time = ", time.count());
+        logger::log(logger::log_level::low, "time_keeper", "getMineTime() = ", result.count());
+        return result;
     }
     std::chrono::minutes getDriveTime() {
         auto time = DRIVE_TIME * _time_ratio;
-        return std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
+        auto result = std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
+        logger::log(logger::log_level::low, "time_keeper", "getDriveTime() raw time = ", time.count());
+        logger::log(logger::log_level::low, "time_keeper", "getDriveTime() = ", result.count());
+        return result;
     }
     std::chrono::minutes getUnloadTime() {
         auto time = UNLOAD_TIME * _time_ratio;
-        return std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
+        auto result = std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
+        logger::log(logger::log_level::low, "time_keeper", "getUnloadTime() raw time = ", time.count());
+        logger::log(logger::log_level::low, "time_keeper", "getUnloadTime() = ", result.count());
+        return result;
     }
 private:
     static constexpr auto MIN_MINE_TIME = 1h;
