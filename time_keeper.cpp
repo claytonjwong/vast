@@ -13,7 +13,7 @@ std::chrono::hours time_keeper::getMineTime() {
     return result;
 }
 
-std::chrono::minutes time_keeper::getDriveTime() {
+std::chrono::minutes time_keeper::getDriveTime() const {
     auto time = DRIVE_TIME * _time_ratio;
     auto result = std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
     logger::log(logger::log_level::low, "time_keeper", "getDriveTime() raw time = ", time.count());
@@ -21,7 +21,7 @@ std::chrono::minutes time_keeper::getDriveTime() {
     return result;
 }
 
-std::chrono::minutes time_keeper::getUnloadTime() {
+std::chrono::minutes time_keeper::getUnloadTime() const {
     auto time = UNLOAD_TIME * _time_ratio;
     auto result = std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
     logger::log(logger::log_level::low, "time_keeper", "getUnloadTime() raw time = ", time.count());
