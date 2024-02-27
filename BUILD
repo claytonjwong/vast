@@ -56,3 +56,38 @@ cc_binary(
         ":truck",
     ],
 )
+
+cc_test(
+  name = "joining_thread_test",
+  size = "small",
+  srcs = ["joining_thread_test.cpp"],
+  deps = ["@com_google_googletest//:gtest_main"],
+)
+
+cc_test(
+  name = "logger_test",
+  size = "small",
+  srcs = ["logger_test.cpp"],
+  deps = ["@com_google_googletest//:gtest_main"],
+)
+
+cc_test(
+  name = "storage_station_test",
+  size = "small",
+  srcs = ["storage_station_test.cpp"],
+  deps = ["@com_google_googletest//:gtest_main"],
+)
+
+cc_test(
+  name = "threadsafe_queue_test",
+  size = "small",
+  srcs = ["threadsafe_queue_test.cpp"],
+  deps = ["@com_google_googletest//:gtest_main"],
+)
+
+cc_test(
+  name = "time_keeper_test",
+  size = "small",
+  srcs = ["time_keeper_test.cpp"],
+  deps = ["@com_google_googletest//:gtest_main"],
+)

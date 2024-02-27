@@ -1062,3 +1062,103 @@ Options:
     -q, --queues           quantity of unloading queues (Required)
     -h, --help             Shows this page
 ```
+
+# Add Unit Tests (Boilerplate Code)
+
+```
+➜  vast git:(main) ✗ ./run_tests.sh
+Starting local Bazel server and connecting to it...
+DEBUG: Rule 'com_google_googletest' indicated that a canonical reproducible form can be obtained by modifying arguments integrity = "sha256-dV+aObxyBfWgxCjpIN2tCSwzyKG0aZfe8/HUqCre1uE="
+DEBUG: Repository com_google_googletest instantiated at:
+  /Users/claytonjwong/sandbox/vast/WORKSPACE:12:13: in <toplevel>
+Repository rule http_archive defined at:
+  /private/var/tmp/_bazel_claytonjwong/ef3314588ed3eae01c340496a8fa31fe/external/bazel_tools/tools/build_defs/repo/http.bzl:381:31: in <toplevel>
+INFO: Analyzed 13 targets (72 packages loaded, 460 targets configured).
+INFO: From Compiling main.cpp:
+In file included from main.cpp:9:
+./logger.h:10:5: warning: 'static' is not permitted on a declaration of a type [-Wmissing-declarations]
+    static enum class log_level {
+    ^
+1 warning generated.
+INFO: From Testing //:time_keeper_test:
+==================== Test output for //:time_keeper_test:
+Running main() from gmock_main.cc
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TimeKeeperTest
+[ RUN      ] TimeKeeperTest.BasicAssertions
+[       OK ] TimeKeeperTest.BasicAssertions (0 ms)
+[----------] 1 test from TimeKeeperTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+================================================================================
+INFO: From Testing //:joining_thread_test:
+==================== Test output for //:joining_thread_test:
+Running main() from gmock_main.cc
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TimeKeeperTest
+[ RUN      ] TimeKeeperTest.BasicAssertions
+[       OK ] TimeKeeperTest.BasicAssertions (0 ms)
+[----------] 1 test from TimeKeeperTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+================================================================================
+INFO: From Testing //:logger_test:
+==================== Test output for //:logger_test:
+Running main() from gmock_main.cc
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TimeKeeperTest
+[ RUN      ] TimeKeeperTest.BasicAssertions
+[       OK ] TimeKeeperTest.BasicAssertions (0 ms)
+[----------] 1 test from TimeKeeperTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+================================================================================
+INFO: From Testing //:storage_station_test:
+==================== Test output for //:storage_station_test:
+Running main() from gmock_main.cc
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TimeKeeperTest
+[ RUN      ] TimeKeeperTest.BasicAssertions
+[       OK ] TimeKeeperTest.BasicAssertions (0 ms)
+[----------] 1 test from TimeKeeperTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+================================================================================
+INFO: From Testing //:threadsafe_queue_test:
+==================== Test output for //:threadsafe_queue_test:
+Running main() from gmock_main.cc
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TimeKeeperTest
+[ RUN      ] TimeKeeperTest.BasicAssertions
+[       OK ] TimeKeeperTest.BasicAssertions (0 ms)
+[----------] 1 test from TimeKeeperTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+================================================================================
+INFO: Found 8 targets and 5 test targets...
+INFO: Elapsed time: 8.622s, Critical Path: 2.37s
+INFO: 61 processes: 27 internal, 34 darwin-sandbox.
+INFO: Build completed successfully, 61 total actions
+//:joining_thread_test                                                   PASSED in 0.2s
+//:logger_test                                                           PASSED in 0.3s
+//:storage_station_test                                                  PASSED in 0.3s
+//:threadsafe_queue_test                                                 PASSED in 0.4s
+//:time_keeper_test                                                      PASSED in 0.2s
+
+Executed 5 out of 5 tests: 5 tests pass.
+```
