@@ -1,0 +1,13 @@
+@startuml
+class truck {
+    State state
+    void mine()
+    void drive()
+    void enqueue()
+    void unload()
+}
+class storage_station {
+    void enqueue()
+    void process()
+}
+@enduml

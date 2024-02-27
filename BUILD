@@ -27,10 +27,16 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "logger",
+    hdrs = ["logger.h"],
+)
+
 cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     deps = [
+        ":logger",
         ":storage_station",
         ":threadsafe_queue",
         ":truck",
