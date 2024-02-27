@@ -5,8 +5,8 @@ bazel build :main && ./bazel-bin/main --trucks=1 --queues=1 >> 'output.txt'
 
 # Cleanup
 ```
-bazel clean --expunge
-rm output.txt
+bazel clean --expunge --async
+rm -f output.txt
 ```
 
 # First Try
