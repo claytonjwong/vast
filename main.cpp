@@ -12,7 +12,7 @@
 
 using namespace std::chrono_literals;
 
-static constexpr auto TIME_RATIO = 0.01;
+static constexpr auto TIME_RATIO = 0.025;
 static constexpr auto SIMULATION_DURATION = 72h;
 
 std::pair<int, int> getArgs(int argc, const char* argv[]) {
