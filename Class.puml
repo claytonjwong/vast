@@ -1,13 +1,85 @@
 @startuml
+
+class joining_thread {
+    -thread t
+    +swap()
+    +get_id()
+    +joinable()
+    +join()
+    +detach()
+    +as_thread()
+}
+
+class logger {
+    +log_level
+    +log()
+    +to_string()
+    +get_time()
+}
+
+class main
+
+class storage_station {
+    -int _queue_count
+    -vector _queues
+    +void enqueue()
+    -void init()
+    -void process(int i)
+}
+
+class threadsafe_queue<T> {
+    -queue<T> q
+    -mutex m
+    -condition_variable ok
+    +void push(T)
+    +void wait_and_pop(T&)
+    +size_t size()
+    +bool empty()
+}
+
+class time_keeper {
+    -duration MIN_MINE_TIME
+    -duration MAX_MINE_TIME
+    -duration DRIVE_TIME
+    -duration UNLOAD_TIME
+    -double _time_ratio
+    -default_random_engine _generator
+    -duration _getMineTime()
+    +duration getMineTime()
+    +getDriveTime()
+    +getUnloadTime()
+}
+
 class truck {
-    State state
+    -State state
     void mine()
     void drive()
     void enqueue()
     void unload()
 }
-class storage_station {
-    void enqueue()
-    void process()
-}
+
+joining_thread -- threadsafe_queue
+joining_thread -- truck
+
+logger -- main
+logger -- storage_station
+logger -- time_keeper
+logger -- truck
+
+main *- truck
+main *- storage_station
+
+storage_station o- threadsafe_queue
+
+truck o- threadsafe_queue
+truck *- time_keeper
+
+note right of argparse
+  3rd party library for CLI args
+end note
+
+note left of main
+  app model
+end note
+
 @enduml

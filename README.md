@@ -1191,3 +1191,7 @@ LOW: Tue Feb 27 15:11:40 2024 - time_keeper - getUnloadTime() = 0
 LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station
 LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 1
 ```
+
+# UML Class Diagram
+
+![](Class.png)
