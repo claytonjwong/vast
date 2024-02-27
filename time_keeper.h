@@ -9,9 +9,9 @@ using namespace std::chrono_literals;
 
 class time_keeper {
 public:
-    time_keeper(double time_ratio) : _time_ratio{ time_ratio } {
+    time_keeper(double time_ratio) noexcept : _time_ratio{ time_ratio } {
     }
-    ~time_keeper() = default;
+    ~time_keeper() noexcept = default;
     time_keeper(const time_keeper&) = delete;
     time_keeper(const time_keeper&&) = delete;
     time_keeper& operator=(const time_keeper&) = delete;

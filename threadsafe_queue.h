@@ -17,8 +17,8 @@ class threadsafe_queue {
     mutable std::mutex m;
     std::condition_variable ok;
 public:
-    threadsafe_queue() = default;
-    ~threadsafe_queue() = default;
+    threadsafe_queue() noexcept = default;
+    ~threadsafe_queue() noexcept = default;
     threadsafe_queue(const threadsafe_queue&) = delete;
     threadsafe_queue(const threadsafe_queue&&) = delete;
     threadsafe_queue& operator=(const threadsafe_queue&) = delete;

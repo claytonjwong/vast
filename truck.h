@@ -8,9 +8,9 @@
 
 class Truck : public std::enable_shared_from_this<Truck> {
 public:
-    Truck(threadsafe_queue<std::shared_ptr<Truck>>& unload_queue, double time_ratio) : _unload_queue{ unload_queue }, _time{ time_ratio } {
+    Truck(threadsafe_queue<std::shared_ptr<Truck>>& unload_queue, double time_ratio) noexcept : _unload_queue{ unload_queue }, _time{ time_ratio } {
     }
-    ~Truck() = default;
+    ~Truck() noexcept = default;
     Truck(const Truck&) = delete;
     Truck(const Truck&&) = delete;
     Truck& operator=(const Truck&) = delete;

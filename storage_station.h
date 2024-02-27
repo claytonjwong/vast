@@ -18,8 +18,8 @@ using QueuePtr = std::shared_ptr<Queue>;
 class storage_station {
 public:
     storage_station() = delete;
-    ~storage_station() = default;
-    explicit storage_station(int queue_count)
+    ~storage_station() noexcept = default;
+    explicit storage_station(int queue_count) noexcept
             : _queue_count{ queue_count } {
         init();
     }
