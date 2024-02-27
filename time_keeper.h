@@ -28,9 +28,6 @@ public:
         auto time = UNLOAD_TIME * _time_ratio;
         return std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
     }
-    void setScale(double time_ratio) {  // to enable time-warping to speed up the simulation
-        _time_ratio = time_ratio;
-    }
 private:
     static constexpr auto MIN_MINING_TIME = 1h;
     static constexpr auto MAX_MINING_TIME = 5h;
