@@ -29,14 +29,14 @@ public:
         return std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
     }
 private:
-    static constexpr auto MIN_MINING_TIME = 1h;
-    static constexpr auto MAX_MINING_TIME = 5h;
+    static constexpr auto MIN_MINE_TIME = 1h;
+    static constexpr auto MAX_MINE_TIME = 5h;
     static constexpr auto DRIVE_TIME = 30min;
     static constexpr auto UNLOAD_TIME = 5min;
     double _time_ratio;
     std::default_random_engine _generator;
     std::chrono::hours _getMineTime() {
-        std::uniform_int_distribution<int> distribution(MIN_MINING_TIME.count(), MAX_MINING_TIME.count());
+        std::uniform_int_distribution<int> distribution(MIN_MINE_TIME.count(), MAX_MINE_TIME.count());
         auto random = distribution(_generator);
         std::ostringstream os;
         os << "_getMineTime() = " << random;
