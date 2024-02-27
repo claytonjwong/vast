@@ -6,6 +6,11 @@ cc_library(
 )
 
 cc_library(
+    name = "joining_thread",
+    hdrs = ["joining_thread.h"],
+)
+
+cc_library(
     name = "threadsafe_queue",
     hdrs = ["threadsafe_queue.h"],
 )
@@ -37,6 +42,7 @@ cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     deps = [
+        ":joining_thread",
         ":logger",
         ":storage_station",
         ":threadsafe_queue",

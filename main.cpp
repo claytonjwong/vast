@@ -3,6 +3,7 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include "joining_thread.h"
 #include "logger.h"
 #include "storage_station.h"
 #include "truck.h"
@@ -18,7 +19,7 @@ static constexpr auto SIMULATION_DURATION = 72h;
 int main() {
     logger::log(logger::log_level::low, "main", "starting simulation");
     auto simulation_duration = SIMULATION_DURATION * TIME_RATIO;
-    std::vector<std::thread> truck_threads;
+    std::vector<joining_thread> truck_threads;
     storage_station station(M);
     threadsafe_queue<std::shared_ptr<Truck>> unload_queue;
     auto unload_queue_work = [&unload_queue, &station, simulation_duration]() {
@@ -31,7 +32,6 @@ int main() {
             station.enqueue(truckPtr);
         }
     };
-    std::thread unload_queue_thread{ unload_queue_work };
     auto truck_work = [&unload_queue, simulation_duration]() {
         logger::log(logger::log_level::low, "main", "running thread for truck_work");
         Truck truck{ unload_queue, TIME_RATIO };
@@ -41,12 +41,7 @@ int main() {
             truck.do_work();
         }
     };
-    generate_n(back_inserter(truck_threads), N, [&]{ return std::thread{ truck_work }; });
-    for (auto& thread: truck_threads) {
-        logger::log(logger::log_level::low, "main", "joining thread for truck_work");
-        thread.join();
-    }
-    logger::log(logger::log_level::low, "main", "joining thread for unload_queue_work");
-    unload_queue_thread.join();
+    joining_thread unload_queue_thread{ unload_queue_work };
+    generate_n(back_inserter(truck_threads), N, [&]{ return joining_thread{ truck_work }; });
     return 0;
 }
