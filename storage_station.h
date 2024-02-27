@@ -57,6 +57,6 @@ public:
         }
     }
 private:
-    int i, _queue_count;
+    int _queue_count;
     std::vector<QueuePtr> _queues;
 };
