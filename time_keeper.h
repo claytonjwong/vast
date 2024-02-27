@@ -39,8 +39,7 @@ private:
         std::uniform_int_distribution<int> distribution(MIN_MINE_TIME.count(), MAX_MINE_TIME.count());
         auto random = distribution(_generator);
         std::ostringstream os;
-        os << "_getMineTime() = " << random;
-        logger::log(logger::log_level::low, "time_keeper", os.str());
+        logger::log(logger::log_level::low, "time_keeper", "_getMineTime() = ", random);
         return std::chrono::hours(random);
     }
 };
