@@ -3,7 +3,6 @@
 #include <condition_variable>
 #include <thread>
 #include "logger.h"
-#include "storage_station.h"
 #include "time_keeper.h"
 
 class Truck : public std::enable_shared_from_this<Truck> {
