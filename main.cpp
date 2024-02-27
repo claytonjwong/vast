@@ -42,6 +42,6 @@ int main() {
         }
     };
     joining_thread unload_queue_thread{ unload_queue_work };
-    generate_n(back_inserter(truck_threads), N, [&]{ return joining_thread{ truck_work }; });
+    generate_n(back_inserter(truck_threads), N, [&truck_work]{ return joining_thread{ truck_work }; });
     return 0;
 }
