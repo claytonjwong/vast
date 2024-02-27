@@ -7,7 +7,7 @@
 
 class logger {
 public:
-    static enum class log_level {
+    enum class log_level {
         low,
         medium,
         high,
