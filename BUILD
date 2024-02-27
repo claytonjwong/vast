@@ -1,6 +1,11 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 cc_library(
+    name = "logger",
+    hdrs = ["logger.h"],
+)
+
+cc_library(
     name = "threadsafe_queue",
     hdrs = ["threadsafe_queue.h"],
 )
@@ -24,12 +29,8 @@ cc_library(
     hdrs = ["storage_station.h"],
     deps = [
         ":threadsafe_queue",
+        ":logger",
     ],
-)
-
-cc_library(
-    name = "logger",
-    hdrs = ["logger.h"],
 )
 
 cc_binary(

@@ -2,6 +2,8 @@
 
 #include <chrono>
 #include <random>
+#include <sstream>
+#include "logger.h"
 
 using namespace std::chrono_literals;
 
@@ -36,9 +38,12 @@ private:
     static constexpr auto UNLOAD_TIME = 5min;
     double _time_ratio;
     std::default_random_engine _generator;
-    double _getMineTime() {
-        std::uniform_real_distribution<double> distribution(MIN_MINING_TIME.count(), MAX_MINING_TIME.count());
+    std::chrono::hours _getMineTime() {
+        std::uniform_int_distribution<int> distribution(MIN_MINING_TIME.count(), MAX_MINING_TIME.count());
         auto random = distribution(_generator);
-        return random;
+        std::ostringstream os;
+        os << "_getMineTime() = " << random;
+        logger::log(logger::log_level::low, "time_keeper", os.str());
+        return std::chrono::hours(random);
     }
 };

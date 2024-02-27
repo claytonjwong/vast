@@ -16,15 +16,13 @@ static constexpr auto TIME_RATIO = 0.5;
 static constexpr auto SIMULATION_DURATION = 72h;
 
 int main() {
-    // TODO: get logger working for nicely formatted output
-    // logger output;
-    // output.log(logger::log_level::low, "Hello world!");
-    std::cout << "Hello world!" << std::endl;
+    logger::log(logger::log_level::low, "main", "starting simulation");
     auto simulation_duration = SIMULATION_DURATION * TIME_RATIO;
     std::vector<std::thread> truck_threads;
     storage_station station(M);
     threadsafe_queue<std::shared_ptr<Truck>> unload_queue;
     auto unload_queue_work = [&unload_queue, &station, simulation_duration]() {
+        logger::log(logger::log_level::low, "main", "running thread for unload_queue_work");
         auto now = std::chrono::steady_clock::now;
         auto start = now();
         while (now() - start < simulation_duration) {
@@ -35,6 +33,7 @@ int main() {
     };
     std::thread unload_queue_thread{ unload_queue_work };
     auto truck_work = [&unload_queue, simulation_duration]() {
+        logger::log(logger::log_level::low, "main", "running thread for truck_work");
         Truck truck{ unload_queue, TIME_RATIO };
         auto now = std::chrono::steady_clock::now;
         auto start = now();
@@ -44,8 +43,10 @@ int main() {
     };
     generate_n(back_inserter(truck_threads), N, [&]{ return std::thread{ truck_work }; });
     for (auto& thread: truck_threads) {
+        logger::log(logger::log_level::low, "main", "joining thread for truck_work");
         thread.join();
     }
+    logger::log(logger::log_level::low, "main", "joining thread for unload_queue_work");
     unload_queue_thread.join();
     return 0;
 }
