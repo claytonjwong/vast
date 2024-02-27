@@ -13,7 +13,7 @@ using namespace std::chrono_literals;
 static constexpr auto N = 1;  // trucks
 static constexpr auto M = 1;  // unload station queues
 
-static constexpr auto TIME_RATIO = 0.5;
+static constexpr auto TIME_RATIO = 0.05;
 static constexpr auto SIMULATION_DURATION = 72h;
 
 int main() {
