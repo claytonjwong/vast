@@ -38,6 +38,7 @@ cc_library(
     name = "storage_station",
     hdrs = ["storage_station.h"],
     deps = [
+        ":joining_thread",
         ":threadsafe_queue",
         ":logger",
     ],

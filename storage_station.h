@@ -7,6 +7,7 @@
 #include <queue>
 #include <utility>
 #include <vector>
+#include "joining_thread.h"
 #include "logger.h"
 #include "threadsafe_queue.h"
 #include "truck.h"
@@ -29,29 +30,34 @@ public:
     storage_station& operator=(const storage_station&&) = delete;
     void enqueue(const TruckPtr truck) {
         logger::log(logger::log_level::low, "storage_station", "enqueuing truck to storage station");
-        // for now, just immediately unload each truck
-        truck->unload();
-        // TODO: create a priority queue with custom comparator (based on min queue size)
-        // for logarithmic indels (insertions/deletions)... basically take the top and pop it off
-        // then push this truck onto that queue, and push the queue back onto the priority queue
+        auto [best_size, best_index] = std::make_pair(1234567890, -1);
+        for (auto i{ 0 }; i < _queues.size(); ++i) {
+            if (best_size > _queues[i]->size()) {
+                best_size = _queues[i]->size(), best_index = i;
+            }
+        }
+        logger::log(logger::log_level::low, "storage_station",
+            "enqueuing truck to storage station -> shortest queue[", best_index, "] of size ",
+            _queues[best_index]->size());
+        _queues[best_index]->push(truck);
     }
     void init() {
         logger::log(logger::log_level::low, "storage_station", "initializing storage station queues");
         generate_n(back_inserter(_queues), _queue_count, []{ return std::make_shared<Queue>(); });
+        for (auto i{ 0 }; i < _queues.size(); ++i) {
+            std::thread t{ &storage_station::process, this, i };
+            t.detach();
+        }
     }
-    void process() {
-        logger::log(logger::log_level::low, "storage_station", "process storage station queues");
-        // TODO: process queues in parallel... maybe just create 1 thread per queue?
-
-        // std::for_each(std::execution::par, _queues.begin(), _queues.end(), [](auto& queue) {
-        //     if (!queue->empty()) {
-        //         std::shared_ptr<Truck> truckPtr;
-        //         queue->wait_and_pop(truckPtr);
-        //         truckPtr->unload();
-        //     }
-        // });
+    void process(int i) {
+        logger::log(logger::log_level::low, "storage_station", "process storage station queue ", i);
+        for (;;) {
+            TruckPtr truckPtr;
+            _queues[i]->wait_and_pop(truckPtr);
+            truckPtr->unload();
+        }
     }
 private:
-    int _queue_count;
+    int i, _queue_count;
     std::vector<QueuePtr> _queues;
 };
