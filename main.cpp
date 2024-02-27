@@ -13,7 +13,7 @@ using namespace std::chrono_literals;
 static constexpr auto N = 1;  // trucks
 static constexpr auto M = 1;  // unload station queues
 
-static constexpr auto TIME_RATIO = 0.05;
+static constexpr auto TIME_RATIO = 0.005;
 static constexpr auto SIMULATION_DURATION = 72h;
 
 int main() {
@@ -31,15 +31,17 @@ int main() {
             unload_queue.wait_and_pop(truckPtr);
             station.enqueue(truckPtr);
         }
+        logger::log(logger::log_level::low, "main", "unload_queue_work() finished simulation");
     };
     auto truck_work = [&unload_queue, simulation_duration]() {
         logger::log(logger::log_level::low, "main", "running thread for truck_work");
-        Truck truck{ unload_queue, TIME_RATIO };
+        auto truckPtr = std::make_shared<Truck>(unload_queue, TIME_RATIO);
         auto now = std::chrono::steady_clock::now;
         auto start = now();
         while (now() - start < simulation_duration) {
-            truck.do_work();
+            truckPtr->do_work();
         }
+        logger::log(logger::log_level::low, "main", "truck_work() finished simulation");
     };
     joining_thread unload_queue_thread{ unload_queue_work };
     generate_n(back_inserter(truck_threads), N, [&truck_work]{ return joining_thread{ truck_work }; });

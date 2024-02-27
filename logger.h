@@ -18,8 +18,8 @@ public:
     static void log(log_level level, const std::string& module, Args&& ...args) {
         std::ostringstream os;
         os << to_string(level) << ": " << get_time() << " - " << module << " - ";
-        (os << ... << std::forward<Args>(args));
-        std::cout << os.str() << std::endl;
+        (os << ... << std::forward<Args>(args)) << '\n';
+        std::cout << os.str(), flush(std::cout);
     }
     static std::string to_string(const log_level& level) {
         switch(level) {

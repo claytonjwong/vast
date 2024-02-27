@@ -29,6 +29,7 @@ public:
         std::this_thread::sleep_for(wait);
         _state = State::Unloaded;
         logger::log(logger::log_level::low, "truck", "unloading end");
+        unload_ok.notify_one();
         // TODO: invoke logging module for performance metrics (how long each truck is in each state)
         //       actually, maybe just notify a listener?
     }
@@ -46,7 +47,7 @@ private:
     threadsafe_queue<std::shared_ptr<Truck>>& _unload_queue;
     time_keeper _time;
     mutable std::mutex m;
-    std::condition_variable ok;
+    std::condition_variable unload_ok;
     void enqueue() {
         logger::log(logger::log_level::low, "truck", "enqueue() begin");
         _state = State::Enqueuing;
@@ -56,7 +57,7 @@ private:
     void wait_for_unload_ok() {
         logger::log(logger::log_level::low, "truck", "wait_for_unload_ok() begin");
         std::unique_lock<std::mutex> lock(m);
-        ok.wait(lock, [this]{ return _state == State::Unloaded; });
+        unload_ok.wait(lock, [this]{ return _state == State::Unloaded; });
         logger::log(logger::log_level::low, "truck", "wait_for_unload_ok() end");
     }
     void drive() {
