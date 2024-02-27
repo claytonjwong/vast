@@ -1,6 +1,6 @@
 # Build + Run
 ```
-bazel build :main && ./bazel-bin/main --trucks=1 --queues=1 >> 'output.txt'
+bazel build :main && ./bazel-bin/main --trucks=100 --queues=3
 ```
 
 # Unit Tests
@@ -1166,4 +1166,28 @@ INFO: Build completed successfully, 61 total actions
 //:time_keeper_test                                                      PASSED in 0.2s
 
 Executed 5 out of 5 tests: 5 tests pass.
+```
+
+# Storage Station: Enqueue to Shortest Queue
+
+```
+vast git:(main) ✗ bazel build :main && ./bazel-bin/main --trucks=1000 --queues=3
+```
+
+These logs provide acedotal evidence that the shortest of the 3 queues is "cherry-picked" by the storage station for enqueue.
+
+```
+LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Tue Feb 27 15:11:40 2024 - time_keeper - _getMineTime() = 3
+LOW: Tue Feb 27 15:11:40 2024 - truck - mine() begin
+LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station
+LOW: Tue Feb 27 15:11:40 2024 - truck - drive() end
+LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station -> shortest queue[1] of size 0
+LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station
+LOW: Tue Feb 27 15:11:40 2024 - truck - enqueue() begin
+LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station -> shortest queue[2] of size 0
+LOW: Tue Feb 27 15:11:40 2024 - truck - drive() begin
+LOW: Tue Feb 27 15:11:40 2024 - time_keeper - getUnloadTime() = 0
+LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station
+LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 1
 ```
