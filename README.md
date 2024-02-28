@@ -1239,7 +1239,7 @@ LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage sta
     * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-de0e471ae9d6dfac2c4f12116db7b78011b3e43b295287562c33179299ad4e61L10
     * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-de0e471ae9d6dfac2c4f12116db7b78011b3e43b295287562c33179299ad4e61L18
     * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-de0e471ae9d6dfac2c4f12116db7b78011b3e43b295287562c33179299ad4e61L26
-* Also, each truck is single-threaded, so we only need to notify_one, not notify_all
+* Also, each truck is single-threaded, so we only need to `notify_one`, not `notify_all`
   * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-d8a3ca271a5803643a10c4f9c007adb5f746c0ea1e004672ec6f3863bc679590L32
 * The simulation duration was incorrectly timed (in our real-world's time), ie. use "seconds" as a common unit-of-measure between the steady_clock time delta `now() - start` and the simulation duration
   * simulation duration as seconds: https://github.com/claytonjwong/vast/commit/fe27ea275bd8cb34622d7e8cf18225414c864673#diff-608d8de3fba954c50110b6d7386988f27295de845e9d7174e40095ba5efcf1bbR57
