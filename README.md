@@ -1217,6 +1217,8 @@ LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage sta
 * The simulation duration was incorrectly timed (in our real-world's time), ie. use "seconds" as a common unit-of-measure between the steady_clock time delta `now() - start` and the simulation duration
   * simulation duration as seconds: https://github.com/claytonjwong/vast/commit/fe27ea275bd8cb34622d7e8cf18225414c864673#diff-608d8de3fba954c50110b6d7386988f27295de845e9d7174e40095ba5efcf1bbR57
   * steady_clock time delta as seconds: https://github.com/claytonjwong/vast/commit/fe27ea275bd8cb34622d7e8cf18225414c864673#diff-608d8de3fba954c50110b6d7386988f27295de845e9d7174e40095ba5efcf1bbR66
+* segmentation fault occurs after simulation finish, this is fixed by joining the threads
+  * https://github.com/claytonjwong/vast/commit/8b8f2f8c295b56b28229ca10b8dcaedd172751f8
 
 Note: we can use `-h` or `--help` to know what these abbreviated CLI args stand for:
 
