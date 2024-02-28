@@ -38,15 +38,15 @@ std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
         parser.print_help();
         exit(0);
     }
-    auto N = parser.get<int>("trucks");
-    auto M = parser.get<int>("queues");
-    auto R = parser.get<double>("ratio");
-    auto D = parser.get<int>("duration");
+    auto N = parser.get<int>("trucks");  // TODO: consider upper limit assertion, since we spawn a thread for each truck
+    auto M = parser.get<int>("queues");  // TODO: consider upper limit assertion, since we spawn a thread for each queue
+    auto TIME_RATIO = parser.get<double>("ratio");
+    auto SIMULATION_DURATION = parser.get<int>("duration");
     assert(0 < N);
     assert(0 < M);
-    assert(0 < R);
-    assert(0 < D);
-    return std::make_tuple(N, M, R, D);
+    assert(0 < TIME_RATIO);
+    assert(0 < SIMULATION_DURATION);
+    return std::make_tuple(N, M, TIME_RATIO, SIMULATION_DURATION);
 }
 
 int main(int argc, const char* argv[]) {
