@@ -1178,7 +1178,7 @@ Executed 5 out of 5 tests: 5 tests pass.
 vast git:(main) ✗ bazel build :main && ./bazel-bin/main --trucks=1000 --queues=3
 ```
 
-These logs provide anecdotal evidence that the shortest of the 3 queues is "cherry-picked" by the storage station for enqueue.
+These logs provide anecdotal evidence that the shortest of the 3 queues is "cherry-picked" by the storage station for enqueue with a bias towards the minimum queue index, ie. the first best of a linear scan of all queue possibilities "breaks ties."
 
 ```
 LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
