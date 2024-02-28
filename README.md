@@ -38,7 +38,6 @@ bazel test --test_output=all //:all
 # Cleanup
 ```
 bazel clean --expunge --async
-rm -f output.txt
 ```
 
 # 3rd Party Dependencies
