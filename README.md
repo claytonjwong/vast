@@ -19,16 +19,16 @@ Options:
 
 The time warp ratio `-r=2` makes the simulation twice as fast as the real-world time.  Thus when the simulation duration is set to 2-hours, ie. `-d=2`, then those 2-hours in the simulation occur over 1-hour in the real-world's time.
 
+```
+bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=2 -d=2
+```
+
+![](r2d2.png)
+
 * **Notes:**
   * these CLI values are a favorite for Star Wars fans 🚀
   * seriously though, this takes an hour to run! 🐢
     * 🛑 not recommended for real-world use 👻
-
-![](r2d2.png)
-
-```
-bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=2 -d=2
-```
 
 # Unit Tests
 ```
