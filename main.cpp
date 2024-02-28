@@ -22,7 +22,7 @@ std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
         .required(true);
     parser.add_argument()
         .names({"-r", "--ratio"})
-        .description("time warp ratio")
+        .description("time warp ratio (example: -r=2 is 2x speed)")
         .required(true);
     parser.add_argument()
         .names({"-d", "--duration"})

@@ -3,11 +3,26 @@
 bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=200 -d=5
 ```
 
+# Help
+```
+➜  vast git:(main) ✗ ./bazel-bin/main -h
+Usage: main [options...]
+Options:
+    -t, --trucks           quantity of mining trucks (Required)
+    -q, --queues           quantity of unloading queues (Required)
+    -r, --ratio            time warp ratio (example: -r=2 is 2x speed) (Required)
+    -d, --duration         simulation duration in hours (Required)
+    -h, --help             Shows this page
+```
+
 ## Example: 2-hour simulation time as 1-hour real-world time
 
 The time warp ratio `-r=2` makes the simulation twice as fast as the real-world time.  Thus when the simulation duration is set to 2-hours, ie. `-d=2`, then those 2-hours in the simulation occur over 1-hour in the real-world's time.
 
-* Note: these CLI values are a favorite for Star Wars fans 🚀
+* **Notes:**
+  * these CLI values are a favorite for Star Wars fans 🚀
+  * seriously though, this takes an hour to run! 🐢
+    * 🛑 not recommended for real-world use 👻
 
 ![](r2d2.png)
 
