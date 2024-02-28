@@ -10,7 +10,7 @@ public:
     template <typename ...Args>
     static void log(int line, const std::string& filename, Args&& ...args) {
         std::ostringstream os;
-        os << get_time() << ": line " << line << " " << filename << " - ";
+        os << get_time() << " line " << line << " " << filename << " - ";
         (os << ... << std::forward<Args>(args)) << '\n';
         std::cout << os.str(), flush(std::cout);
     }
