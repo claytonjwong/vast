@@ -51,16 +51,16 @@ std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
 
 int main(int argc, const char* argv[]) {
     auto [N, M, TIME_RATIO, SIMULATION_DURATION] = getArgs(argc, argv);
-    logger::log(logger::log_level::low, "main", "starting simulation with ",
+    logger::log(__LINE__, __FILE__, "starting simulation with ",
         N, " truck(s) and ", M, " unloading queue(s) using time warp ratio ", TIME_RATIO,
         " for duration ", SIMULATION_DURATION, " hours");
     auto simulation_duration = std::chrono::seconds(SIMULATION_DURATION * 60 * 60) / TIME_RATIO;  // FIXME? multiply by 60 * 60 to convert hours to seconds
-    logger::log(logger::log_level::low, "main", "simulation duration ", simulation_duration.count(), " seconds (our world's real-time)");
+    logger::log(__LINE__, __FILE__, "simulation duration ", simulation_duration.count(), " seconds (our world's real-time)");
     std::vector<joining_thread> truck_threads;
     storage_station station(M);
     threadsafe_queue<std::shared_ptr<Truck>> unload_queue;
     auto unload_queue_work = [&unload_queue, &station, simulation_duration]() {
-        logger::log(logger::log_level::low, "main", "running thread for unload_queue_work");
+        logger::log(__LINE__, __FILE__, "running thread for unload_queue_work");
         auto now = std::chrono::steady_clock::now;
         auto start = now();
         auto delta = [&now, start]{ return std::chrono::duration<double>(now() - start); }; // seconds
@@ -68,13 +68,13 @@ int main(int argc, const char* argv[]) {
             std::shared_ptr<Truck> truckPtr;
             unload_queue.wait_and_pop(truckPtr);
             station.enqueue(truckPtr);
-            logger::log(logger::log_level::low, "main", "runtime = ", delta().count(),
+            logger::log(__LINE__, __FILE__, "runtime = ", delta().count(),
                 " seconds < ", simulation_duration.count(), " simulation seconds (our world's real-time)");
         }
-        logger::log(logger::log_level::low, "main", "unload_queue_work() finished simulation");
+        logger::log(__LINE__, __FILE__, "unload_queue_work() finished simulation");
     };
     auto truck_work = [&unload_queue, simulation_duration, TIME_RATIO = TIME_RATIO]() {
-        logger::log(logger::log_level::low, "main", "running thread for truck_work");
+        logger::log(__LINE__, __FILE__, "running thread for truck_work");
         auto truckPtr = std::make_shared<Truck>(unload_queue, TIME_RATIO);
         auto now = std::chrono::steady_clock::now;
         auto start = now();
@@ -82,7 +82,7 @@ int main(int argc, const char* argv[]) {
         while (delta() < simulation_duration) {
             truckPtr->do_work();
         }
-        logger::log(logger::log_level::low, "main", "truck_work() finished simulation");
+        logger::log(__LINE__, __FILE__, "truck_work() finished simulation");
     };
     joining_thread unload_queue_thread{ unload_queue_work };
     generate_n(back_inserter(truck_threads), N, [&truck_work]{ return joining_thread{ truck_work }; });

@@ -23,12 +23,12 @@ public:
         drive();   // drive from unloading station to mine site
     }
     void unload() {
-        logger::log(logger::log_level::low, "truck", "unloading begin");
+        logger::log(__LINE__, __FILE__, "unloading begin");
         _state = State::Unloading;
         auto wait = _time.getUnloadTime();
         std::this_thread::sleep_for(wait);
         _state = State::Unloaded;
-        logger::log(logger::log_level::low, "truck", "unloading end");
+        logger::log(__LINE__, __FILE__, "unloading end");
         unload_ok.notify_one();
         // TODO: invoke logging module for performance metrics (how long each truck is in each state)
         //       actually, maybe just notify a listener?
@@ -49,32 +49,32 @@ private:
     mutable std::mutex m;
     std::condition_variable unload_ok;
     void enqueue() {
-        logger::log(logger::log_level::low, "truck", "enqueue() begin");
+        logger::log(__LINE__, __FILE__, "enqueue() begin");
         _state = State::Enqueuing;
         _unload_queue.push(shared_from_this());
-        logger::log(logger::log_level::low, "truck", "enqueue() end");
+        logger::log(__LINE__, __FILE__, "enqueue() end");
     }
     void wait_for_unload_ok() {
-        logger::log(logger::log_level::low, "truck", "wait_for_unload_ok() begin");
+        logger::log(__LINE__, __FILE__, "wait_for_unload_ok() begin");
         std::unique_lock<std::mutex> lock(m);
         unload_ok.wait(lock, [this]{ return _state == State::Unloaded; });
-        logger::log(logger::log_level::low, "truck", "wait_for_unload_ok() end");
+        logger::log(__LINE__, __FILE__, "wait_for_unload_ok() end");
     }
     void drive() {
-        logger::log(logger::log_level::low, "truck", "drive() begin");
+        logger::log(__LINE__, __FILE__, "drive() begin");
         _state = State::Driving;
         auto wait = _time.getDriveTime();
         std::this_thread::sleep_for(wait);
-        logger::log(logger::log_level::low, "truck", "drive() end");
+        logger::log(__LINE__, __FILE__, "drive() end");
         // TODO: invoke logging module for performance metrics (how long each truck is in each state)
         //       actually, maybe just notify a listener?
     }
     void mine() {
-        logger::log(logger::log_level::low, "truck", "mine() begin");
+        logger::log(__LINE__, __FILE__, "mine() begin");
         _state = State::Mining;
         auto wait = _time.getMineTime();
         std::this_thread::sleep_for(wait);
-        logger::log(logger::log_level::low, "truck", "mine() end");
+        logger::log(__LINE__, __FILE__, "mine() end");
         // TODO: invoke logging module for performance metrics (how long each truck is in each state)
         //       actually, maybe just notify a listener?
     }
