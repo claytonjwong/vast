@@ -1567,4 +1567,6 @@ LOW: Wed Feb 28 09:40:32 2024 - truck - unloading end
 
 ## Segmentation Fault Validation
 
+Ancedotal evidence suggests this is fixed, since the segmentation fault previously occurred 100% of the time after the simulation ended.
+
 ![](segfault_validation.png)
