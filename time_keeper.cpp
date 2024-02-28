@@ -5,28 +5,25 @@ using namespace std::chrono_literals;
 time_keeper::time_keeper(double time_ratio) noexcept : _time_ratio{ time_ratio } {
 }
 
-std::chrono::hours time_keeper::getMineTime() {
-    auto time = _getMineTime() * _time_ratio;
-    auto result = std::chrono::duration_cast<std::chrono::hours>(std::chrono::duration<double>(time));
-    logger::log(logger::log_level::low, "time_keeper", "getMineTime() raw time = ", time.count());
-    logger::log(logger::log_level::low, "time_keeper", "getMineTime() = ", result.count());
-    return result;
+std::chrono::duration<double> time_keeper::getMineTime() {
+    auto duration = _getMineTime() / _time_ratio;
+    logger::log(logger::log_level::low, "time_keeper", "getMineTime() = ",
+        duration.count(), " hours = ", duration.count() * 3600, " seconds");
+    return duration;
 }
 
-std::chrono::minutes time_keeper::getDriveTime() const {
-    auto time = DRIVE_TIME * _time_ratio;
-    auto result = std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
-    logger::log(logger::log_level::low, "time_keeper", "getDriveTime() raw time = ", time.count());
-    logger::log(logger::log_level::low, "time_keeper", "getDriveTime() = ", result.count());
-    return result;
+std::chrono::duration<double> time_keeper::getDriveTime() const {
+    auto duration = DRIVE_TIME / _time_ratio;
+    logger::log(logger::log_level::low, "time_keeper", "getDriveTime() = ",
+        duration.count(), " minutes = ", duration.count() * 60, " seconds");
+    return duration;
 }
 
-std::chrono::minutes time_keeper::getUnloadTime() const {
-    auto time = UNLOAD_TIME * _time_ratio;
-    auto result = std::chrono::duration_cast<std::chrono::minutes>(std::chrono::duration<double>(time));
-    logger::log(logger::log_level::low, "time_keeper", "getUnloadTime() raw time = ", time.count());
-    logger::log(logger::log_level::low, "time_keeper", "getUnloadTime() = ", result.count());
-    return result;
+std::chrono::duration<double> time_keeper::getUnloadTime() const {
+    auto duration = UNLOAD_TIME / _time_ratio;
+    logger::log(logger::log_level::low, "time_keeper", "getUnloadTime() = ",
+        duration.count(), " minutes = ", duration.count() * 60, " seconds");
+    return duration;
 }
 
 std::chrono::hours time_keeper::_getMineTime() {

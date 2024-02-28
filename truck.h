@@ -29,7 +29,7 @@ public:
         std::this_thread::sleep_for(wait);
         _state = State::Unloaded;
         logger::log(logger::log_level::low, "truck", "unloading end");
-        unload_ok.notify_all();
+        unload_ok.notify_one();
         // TODO: invoke logging module for performance metrics (how long each truck is in each state)
         //       actually, maybe just notify a listener?
     }

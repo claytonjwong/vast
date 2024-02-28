@@ -12,10 +12,9 @@
 
 using namespace std::chrono_literals;
 
-static constexpr auto TIME_RATIO = 0.025;
 static constexpr auto SIMULATION_DURATION = 72h;
 
-std::pair<int, int> getArgs(int argc, const char* argv[]) {
+std::tuple<int, int, int> getArgs(int argc, const char* argv[]) {
 argparse::ArgumentParser parser("main", "argument parser");
     parser.add_argument()
         .names({"-t", "--trucks"})
@@ -24,6 +23,10 @@ argparse::ArgumentParser parser("main", "argument parser");
     parser.add_argument()
         .names({"-q", "--queues"})
         .description("quantity of unloading queues")
+        .required(true);
+    parser.add_argument()
+        .names({"-r", "--ratio"})
+        .description("time warp ratio")
         .required(true);
     parser.enable_help();
     auto error = parser.parse(argc, argv);
@@ -37,15 +40,18 @@ argparse::ArgumentParser parser("main", "argument parser");
     }
     auto N = parser.get<int>("trucks");
     auto M = parser.get<int>("queues");
+    auto R = parser.get<double>("ratio");
     assert(0 < N);
     assert(0 < M);
-    return std::make_pair(N, M);
+    assert(0 < R);
+    return std::make_tuple(N, M, R);
 }
 
 int main(int argc, const char* argv[]) {
-    auto [N, M] = getArgs(argc, argv);
-    logger::log(logger::log_level::low, "main", "starting simulation with ", N, " trucks and ", M, " unloading queues");
-    auto simulation_duration = SIMULATION_DURATION * TIME_RATIO;
+    auto [N, M, TIME_RATIO] = getArgs(argc, argv);
+    logger::log(logger::log_level::low, "main", "starting simulation with ",
+        N, " truck(s) and ", M, " unloading queue(s) using time warp ratio ", TIME_RATIO);
+    auto simulation_duration = SIMULATION_DURATION / TIME_RATIO;
     std::vector<joining_thread> truck_threads;
     storage_station station(M);
     threadsafe_queue<std::shared_ptr<Truck>> unload_queue;
@@ -60,7 +66,7 @@ int main(int argc, const char* argv[]) {
         }
         logger::log(logger::log_level::low, "main", "unload_queue_work() finished simulation");
     };
-    auto truck_work = [&unload_queue, simulation_duration]() {
+    auto truck_work = [&unload_queue, simulation_duration, TIME_RATIO = TIME_RATIO]() {
         logger::log(logger::log_level::low, "main", "running thread for truck_work");
         auto truckPtr = std::make_shared<Truck>(unload_queue, TIME_RATIO);
         auto now = std::chrono::steady_clock::now;

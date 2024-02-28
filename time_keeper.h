@@ -15,9 +15,9 @@ public:
     time_keeper(const time_keeper&&) = delete;
     time_keeper& operator=(const time_keeper&) = delete;
     time_keeper& operator=(const time_keeper&&) = delete;
-    std::chrono::hours getMineTime();
-    std::chrono::minutes getDriveTime() const;
-    std::chrono::minutes getUnloadTime() const;
+    std::chrono::duration<double> getMineTime();
+    std::chrono::duration<double> getDriveTime() const;
+    std::chrono::duration<double> getUnloadTime() const;
 private:
     static constexpr auto MIN_MINE_TIME = 1h;
     static constexpr auto MAX_MINE_TIME = 5h;
