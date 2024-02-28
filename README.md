@@ -18,7 +18,7 @@ rm -f output.txt
 
 https://github.com/jamolnng/argparse
 
-# First Try (Day 1) - 2024-02-26
+# First Try (Day 1) - Monday 2024-02-26
 
 ## Whiteboard
 ![](whiteboard.png)
@@ -47,7 +47,7 @@ libc++abi: terminating due to uncaught exception of type std::__1::bad_weak_ptr:
 [1]    51564 abort      ./bazel-bin/main
 ```
 
-# Second Try (Day 2) - 2024-02-27
+# Second Try (Day 2) - Tuesday 2024-02-27
 
 ![](todo_list.png)
 
@@ -1205,7 +1205,7 @@ LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage sta
 
 ![](Class.png)
 
-# Third Try (Day 3) - 2024-02-28
+# Third Try (Day 3) - Wednesday 2024-02-28
 
 * Bug fixes for wait durations!  `std::chrono::duration<Rep,Period>`
   * The duration casts `Rep = Long`, so the fractional values are lost! (that's why we see `0` printed in the Second Try above)
