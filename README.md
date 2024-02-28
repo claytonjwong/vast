@@ -43,9 +43,9 @@ libc++abi: terminating due to uncaught exception of type std::__1::bad_weak_ptr:
 # Second Try
 
 * Bug fix for `bad_weak_ptr`: in the `truck_work` thread function, the `Truck` was constructed on the stack rather than a `shared_ptr` on the heap, thus the reference count reached `0` when `shared_from_this()` was invoked.
-  * https://github.com/claytonjwong/vast/blob/main/main.cpp#L30
+  * https://github.com/claytonjwong/vast/commit/f3f3271240e6bbcc604046f9f2bb968e6a3416ca#diff-608d8de3fba954c50110b6d7386988f27295de845e9d7174e40095ba5efcf1bbR38
 * Bug fix for `Truck` state machine getting "stuck" after unloading, which was due to missing notification for the condition variable.
-  * https://github.com/claytonjwong/vast/blob/main/truck.h#L32
+  * https://github.com/claytonjwong/vast/commit/f3f3271240e6bbcc604046f9f2bb968e6a3416ca#diff-d8a3ca271a5803643a10c4f9c007adb5f746c0ea1e004672ec6f3863bc679590R32
 
 ```
 LOW: Tue Feb 27 09:45:24 2024 - main - starting simulation
