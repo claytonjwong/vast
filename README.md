@@ -1208,7 +1208,7 @@ LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage sta
 # Third Try (Day 3) - Wednesday 2024-02-28
 
 * Bug fixes for wait durations!  `std::chrono::duration<Rep,Period>`
-  * The duration casts `Rep = Long`, so the fractional values are lost! (that's why we see `0` printed in the Second Try above)
+  * The duration casts `Rep = Long`, so the fractional values are lost! (that's why we see `0` printed in the [Second Try](https://github.com/claytonjwong/vast?tab=readme-ov-file#second-try-day-2---tuesday-2024-02-27))
     * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-de0e471ae9d6dfac2c4f12116db7b78011b3e43b295287562c33179299ad4e61L10
     * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-de0e471ae9d6dfac2c4f12116db7b78011b3e43b295287562c33179299ad4e61L18
     * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-de0e471ae9d6dfac2c4f12116db7b78011b3e43b295287562c33179299ad4e61L26
