@@ -86,5 +86,9 @@ int main(int argc, const char* argv[]) {
     };
     joining_thread unload_queue_thread{ unload_queue_work };
     generate_n(back_inserter(truck_threads), N, [&truck_work]{ return joining_thread{ truck_work }; });
+    for (auto& thread: truck_threads) {
+        thread.join();
+    }
+    unload_queue_thread.join();
     return 0;
 }
