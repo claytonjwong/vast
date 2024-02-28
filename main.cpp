@@ -58,28 +58,26 @@ int main(int argc, const char* argv[]) {
     logger::log(__LINE__, __FILE__, "simulation duration ", simulation_duration.count(), " seconds (our world's real-time)");
     std::vector<joining_thread> truck_threads;
     storage_station station(M);
-    threadsafe_queue<std::shared_ptr<Truck>> unload_queue;
-    auto unload_queue_work = [&unload_queue, &station, simulation_duration]() {
+    threadsafe_queue<std::shared_ptr<Truck>> unload_queue;  // Trucks push themselves onto this emphemeral queue to the storage station
+    auto now = std::chrono::steady_clock::now;
+    auto delta = [&now](auto start) { return std::chrono::duration<double>(now() - start); }; // seconds
+    auto unload_queue_work = [&] {
         logger::log(__LINE__, __FILE__, "running thread for unload_queue_work");
-        auto now = std::chrono::steady_clock::now;
         auto start = now();
-        auto delta = [&now, start]{ return std::chrono::duration<double>(now() - start); }; // seconds
-        while (delta() < simulation_duration) {
+        while (delta(start) < simulation_duration) {
             std::shared_ptr<Truck> truckPtr;
             unload_queue.wait_and_pop(truckPtr);
             station.enqueue(truckPtr);
-            logger::log(__LINE__, __FILE__, "runtime = ", delta().count(),
+            logger::log(__LINE__, __FILE__, "runtime = ", delta(start).count(),
                 " seconds < ", simulation_duration.count(), " simulation seconds (our world's real-time)");
         }
         logger::log(__LINE__, __FILE__, "unload_queue_work() finished simulation");
     };
-    auto truck_work = [&unload_queue, simulation_duration, TIME_RATIO = TIME_RATIO]() {
+    auto truck_work = [&, TIME_RATIO = TIME_RATIO]() {
         logger::log(__LINE__, __FILE__, "running thread for truck_work");
         auto truckPtr = std::make_shared<Truck>(unload_queue, TIME_RATIO);
-        auto now = std::chrono::steady_clock::now;
         auto start = now();
-        auto delta = [&now, start]{ return std::chrono::duration<double>(now() - start); }; // seconds
-        while (delta() < simulation_duration) {
+        while (delta(start) < simulation_duration) {
             truckPtr->do_work();
         }
         logger::log(__LINE__, __FILE__, "truck_work() finished simulation");
