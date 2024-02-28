@@ -1214,6 +1214,9 @@ LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage sta
     * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-de0e471ae9d6dfac2c4f12116db7b78011b3e43b295287562c33179299ad4e61L26
   * Also, each truck is single-threaded, so we only need to notify_one, not notify_all
     * https://github.com/claytonjwong/vast/commit/a332d1fff2d85d60afbb595ecba17aa3bf790bb3#diff-d8a3ca271a5803643a10c4f9c007adb5f746c0ea1e004672ec6f3863bc679590L32
+  * The simulation duration was incorrectly timed (in our real-world's time), ie. use "seconds" as a common unit-of-measure between the steady_clock time delta `now() - start` and the simulation duration
+    * simulation duration as seconds: https://github.com/claytonjwong/vast/commit/fe27ea275bd8cb34622d7e8cf18225414c864673#diff-608d8de3fba954c50110b6d7386988f27295de845e9d7174e40095ba5efcf1bbR57
+    * steady_clock time delta as seconds: https://github.com/claytonjwong/vast/commit/fe27ea275bd8cb34622d7e8cf18225414c864673#diff-608d8de3fba954c50110b6d7386988f27295de845e9d7174e40095ba5efcf1bbR66
 
 Note: we can use `-h` or `--help` to know what these abbreviated CLI args stand for:
 
@@ -1341,4 +1344,194 @@ LOW: Wed Feb 28 07:27:29 2024 - truck - drive() end
 LOW: Wed Feb 28 07:27:29 2024 - truck - mine() begin
 LOW: Wed Feb 28 07:27:29 2024 - time_keeper - _getMineTime() = 1
 LOW: Wed Feb 28 07:27:29 2024 - time_keeper - getMineTime() = 0.0333333 hours = 120 seconds
+```
+
+## Pass the simulation duration as a CLI arg
+
+```
+➜  vast git:(main) ✗ ./bazel-bin/main -h
+Usage: main [options...]
+Options:
+    -t, --trucks           quantity of mining trucks (Required)
+    -q, --queues           quantity of unloading queues (Required)
+    -r, --ratio            time warp ratio         (Required)
+    -d, --duration         simulation duration in hours (Required)
+    -h, --help             Shows this page
+```
+
+## Run the simulation for 24 hours and observe segfault after the simulation is finished
+
+```
+➜  vast git:(main) ✗ bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=200 -d=24
+INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
+INFO: Found 1 target...
+Target //:main up-to-date:
+  bazel-bin/main
+INFO: Elapsed time: 1.015s, Critical Path: 0.93s
+INFO: 3 processes: 1 internal, 2 darwin-sandbox.
+INFO: Build completed successfully, 3 total actions
+LOW: Wed Feb 28 09:32:23 2024 - main - starting simulation with 1 truck(s) and 1 unloading queue(s) using time warp ratio 200 for duration 24 hours
+LOW: Wed Feb 28 09:32:23 2024 - main - simulation duration 432
+LOW: Wed Feb 28 09:32:23 2024 - storage_station - initializing storage station queues
+LOW: Wed Feb 28 09:32:23 2024 - storage_station - process storage station queue 0
+LOW: Wed Feb 28 09:32:23 2024 - main - running thread for truck_work
+LOW: Wed Feb 28 09:32:23 2024 - truck - mine() begin
+LOW: Wed Feb 28 09:32:23 2024 - main - running thread for unload_queue_work
+LOW: Wed Feb 28 09:32:23 2024 - time_keeper - _getMineTime() = 2
+LOW: Wed Feb 28 09:32:23 2024 - main - now() - start = 0 < 432
+LOW: Wed Feb 28 09:32:23 2024 - time_keeper - getMineTime() = 0.01 hours = 36 seconds
+LOW: Wed Feb 28 09:32:59 2024 - truck - mine() end
+LOW: Wed Feb 28 09:32:59 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:32:59 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:33:08 2024 - truck - drive() end
+LOW: Wed Feb 28 09:33:08 2024 - truck - enqueue() begin
+LOW: Wed Feb 28 09:33:08 2024 - truck - enqueue() end
+LOW: Wed Feb 28 09:33:08 2024 - truck - wait_for_unload_ok() begin
+LOW: Wed Feb 28 09:33:08 2024 - storage_station - enqueuing truck to storage station
+LOW: Wed Feb 28 09:33:08 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Wed Feb 28 09:33:08 2024 - main - now() - start = 45.0093 < 432
+LOW: Wed Feb 28 09:33:08 2024 - truck - unloading begin
+LOW: Wed Feb 28 09:33:08 2024 - time_keeper - getUnloadTime() = 0.025 minutes = 1.5 seconds
+LOW: Wed Feb 28 09:33:09 2024 - truck - unloading end
+LOW: Wed Feb 28 09:33:09 2024 - truck - wait_for_unload_ok() end
+LOW: Wed Feb 28 09:33:09 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:33:09 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:33:18 2024 - truck - drive() end
+LOW: Wed Feb 28 09:33:18 2024 - truck - mine() begin
+LOW: Wed Feb 28 09:33:18 2024 - time_keeper - _getMineTime() = 5
+LOW: Wed Feb 28 09:33:18 2024 - time_keeper - getMineTime() = 0.025 hours = 90 seconds
+LOW: Wed Feb 28 09:34:48 2024 - truck - mine() end
+LOW: Wed Feb 28 09:34:48 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:34:48 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:34:57 2024 - truck - drive() end
+LOW: Wed Feb 28 09:34:57 2024 - truck - enqueue() begin
+LOW: Wed Feb 28 09:34:57 2024 - truck - enqueue() end
+LOW: Wed Feb 28 09:34:57 2024 - truck - wait_for_unload_ok() begin
+LOW: Wed Feb 28 09:34:57 2024 - storage_station - enqueuing truck to storage station
+LOW: Wed Feb 28 09:34:57 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Wed Feb 28 09:34:57 2024 - main - now() - start = 154.52 < 432
+LOW: Wed Feb 28 09:34:57 2024 - truck - unloading begin
+LOW: Wed Feb 28 09:34:57 2024 - time_keeper - getUnloadTime() = 0.025 minutes = 1.5 seconds
+LOW: Wed Feb 28 09:34:59 2024 - truck - unloading end
+LOW: Wed Feb 28 09:34:59 2024 - truck - wait_for_unload_ok() end
+LOW: Wed Feb 28 09:34:59 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:34:59 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:35:08 2024 - truck - drive() end
+LOW: Wed Feb 28 09:35:08 2024 - truck - mine() begin
+LOW: Wed Feb 28 09:35:08 2024 - time_keeper - _getMineTime() = 1
+LOW: Wed Feb 28 09:35:08 2024 - time_keeper - getMineTime() = 0.005 hours = 18 seconds
+LOW: Wed Feb 28 09:35:26 2024 - truck - mine() end
+LOW: Wed Feb 28 09:35:26 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:35:26 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:35:35 2024 - truck - drive() end
+LOW: Wed Feb 28 09:35:35 2024 - truck - enqueue() begin
+LOW: Wed Feb 28 09:35:35 2024 - truck - enqueue() end
+LOW: Wed Feb 28 09:35:35 2024 - truck - wait_for_unload_ok() begin
+LOW: Wed Feb 28 09:35:35 2024 - storage_station - enqueuing truck to storage station
+LOW: Wed Feb 28 09:35:35 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Wed Feb 28 09:35:35 2024 - main - now() - start = 192.031 < 432
+LOW: Wed Feb 28 09:35:35 2024 - truck - unloading begin
+LOW: Wed Feb 28 09:35:35 2024 - time_keeper - getUnloadTime() = 0.025 minutes = 1.5 seconds
+LOW: Wed Feb 28 09:35:36 2024 - truck - unloading end
+LOW: Wed Feb 28 09:35:36 2024 - truck - wait_for_unload_ok() end
+LOW: Wed Feb 28 09:35:36 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:35:36 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:35:45 2024 - truck - drive() end
+LOW: Wed Feb 28 09:35:45 2024 - truck - mine() begin
+LOW: Wed Feb 28 09:35:45 2024 - time_keeper - _getMineTime() = 3
+LOW: Wed Feb 28 09:35:45 2024 - time_keeper - getMineTime() = 0.015 hours = 54 seconds
+LOW: Wed Feb 28 09:36:39 2024 - truck - mine() end
+LOW: Wed Feb 28 09:36:39 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:36:39 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:36:48 2024 - truck - drive() end
+LOW: Wed Feb 28 09:36:48 2024 - truck - enqueue() begin
+LOW: Wed Feb 28 09:36:48 2024 - truck - enqueue() end
+LOW: Wed Feb 28 09:36:48 2024 - truck - wait_for_unload_ok() begin
+LOW: Wed Feb 28 09:36:48 2024 - storage_station - enqueuing truck to storage station
+LOW: Wed Feb 28 09:36:48 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Wed Feb 28 09:36:48 2024 - main - now() - start = 265.544 < 432
+LOW: Wed Feb 28 09:36:48 2024 - truck - unloading begin
+LOW: Wed Feb 28 09:36:48 2024 - time_keeper - getUnloadTime() = 0.025 minutes = 1.5 seconds
+LOW: Wed Feb 28 09:36:50 2024 - truck - unloading end
+LOW: Wed Feb 28 09:36:50 2024 - truck - wait_for_unload_ok() end
+LOW: Wed Feb 28 09:36:50 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:36:50 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:36:59 2024 - truck - drive() end
+LOW: Wed Feb 28 09:36:59 2024 - truck - mine() begin
+LOW: Wed Feb 28 09:36:59 2024 - time_keeper - _getMineTime() = 1
+LOW: Wed Feb 28 09:36:59 2024 - time_keeper - getMineTime() = 0.005 hours = 18 seconds
+LOW: Wed Feb 28 09:37:17 2024 - truck - mine() end
+LOW: Wed Feb 28 09:37:17 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:37:17 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:37:26 2024 - truck - drive() end
+LOW: Wed Feb 28 09:37:26 2024 - truck - enqueue() begin
+LOW: Wed Feb 28 09:37:26 2024 - truck - enqueue() end
+LOW: Wed Feb 28 09:37:26 2024 - truck - wait_for_unload_ok() begin
+LOW: Wed Feb 28 09:37:26 2024 - storage_station - enqueuing truck to storage station
+LOW: Wed Feb 28 09:37:26 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Wed Feb 28 09:37:26 2024 - main - now() - start = 303.056 < 432
+LOW: Wed Feb 28 09:37:26 2024 - truck - unloading begin
+LOW: Wed Feb 28 09:37:26 2024 - time_keeper - getUnloadTime() = 0.025 minutes = 1.5 seconds
+LOW: Wed Feb 28 09:37:27 2024 - truck - unloading end
+LOW: Wed Feb 28 09:37:27 2024 - truck - wait_for_unload_ok() end
+LOW: Wed Feb 28 09:37:27 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:37:27 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:37:36 2024 - truck - drive() end
+LOW: Wed Feb 28 09:37:36 2024 - truck - mine() begin
+LOW: Wed Feb 28 09:37:36 2024 - time_keeper - _getMineTime() = 1
+LOW: Wed Feb 28 09:37:36 2024 - time_keeper - getMineTime() = 0.005 hours = 18 seconds
+LOW: Wed Feb 28 09:37:54 2024 - truck - mine() end
+LOW: Wed Feb 28 09:37:54 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:37:54 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:38:03 2024 - truck - drive() end
+LOW: Wed Feb 28 09:38:03 2024 - truck - enqueue() begin
+LOW: Wed Feb 28 09:38:03 2024 - truck - enqueue() end
+LOW: Wed Feb 28 09:38:03 2024 - truck - wait_for_unload_ok() begin
+LOW: Wed Feb 28 09:38:03 2024 - storage_station - enqueuing truck to storage station
+LOW: Wed Feb 28 09:38:03 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Wed Feb 28 09:38:03 2024 - main - now() - start = 340.572 < 432
+LOW: Wed Feb 28 09:38:03 2024 - truck - unloading begin
+LOW: Wed Feb 28 09:38:03 2024 - time_keeper - getUnloadTime() = 0.025 minutes = 1.5 seconds
+LOW: Wed Feb 28 09:38:05 2024 - truck - unloading end
+LOW: Wed Feb 28 09:38:05 2024 - truck - wait_for_unload_ok() end
+LOW: Wed Feb 28 09:38:05 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:38:05 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:38:14 2024 - truck - drive() end
+LOW: Wed Feb 28 09:38:14 2024 - truck - mine() begin
+LOW: Wed Feb 28 09:38:14 2024 - time_keeper - _getMineTime() = 3
+LOW: Wed Feb 28 09:38:14 2024 - time_keeper - getMineTime() = 0.015 hours = 54 seconds
+LOW: Wed Feb 28 09:39:08 2024 - truck - mine() end
+LOW: Wed Feb 28 09:39:08 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:39:08 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:39:17 2024 - truck - drive() end
+LOW: Wed Feb 28 09:39:17 2024 - truck - enqueue() begin
+LOW: Wed Feb 28 09:39:17 2024 - truck - enqueue() end
+LOW: Wed Feb 28 09:39:17 2024 - truck - wait_for_unload_ok() begin
+LOW: Wed Feb 28 09:39:17 2024 - storage_station - enqueuing truck to storage station
+LOW: Wed Feb 28 09:39:17 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Wed Feb 28 09:39:17 2024 - main - now() - start = 414.091 < 432
+LOW: Wed Feb 28 09:39:17 2024 - truck - unloading begin
+LOW: Wed Feb 28 09:39:17 2024 - time_keeper - getUnloadTime() = 0.025 minutes = 1.5 seconds
+LOW: Wed Feb 28 09:39:18 2024 - truck - unloading end
+LOW: Wed Feb 28 09:39:18 2024 - truck - wait_for_unload_ok() end
+LOW: Wed Feb 28 09:39:18 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:39:18 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:39:27 2024 - truck - drive() end
+LOW: Wed Feb 28 09:39:27 2024 - truck - mine() begin
+LOW: Wed Feb 28 09:39:27 2024 - time_keeper - _getMineTime() = 3
+LOW: Wed Feb 28 09:39:27 2024 - time_keeper - getMineTime() = 0.015 hours = 54 seconds
+LOW: Wed Feb 28 09:40:21 2024 - truck - mine() end
+LOW: Wed Feb 28 09:40:21 2024 - truck - drive() begin
+LOW: Wed Feb 28 09:40:21 2024 - time_keeper - getDriveTime() = 0.15 minutes = 9 seconds
+LOW: Wed Feb 28 09:40:30 2024 - truck - drive() end
+LOW: Wed Feb 28 09:40:30 2024 - truck - enqueue() begin
+LOW: Wed Feb 28 09:40:30 2024 - truck - enqueue() end
+LOW: Wed Feb 28 09:40:30 2024 - truck - wait_for_unload_ok() begin
+LOW: Wed Feb 28 09:40:30 2024 - storage_station - enqueuing truck to storage station
+LOW: Wed Feb 28 09:40:30 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 0
+LOW: Wed Feb 28 09:40:30 2024 - main - unload_queue_work() finished simulation
+LOW: Wed Feb 28 09:40:30 2024 - truck - unloading begin
+LOW: Wed Feb 28 09:40:30 2024 - time_keeper - getUnloadTime() = 0.025 minutes = 1.5 seconds
+LOW: Wed Feb 28 09:40:32 2024 - truck - unloading end
+[2]    63069 segmentation fault  ./bazel-bin/main -t=1 -q=1 -r=200 -d=24
 ```
