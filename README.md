@@ -1,6 +1,6 @@
 # Build + Run
 ```
-bazel build :main && ./bazel-bin/main --trucks=100 --queues=3
+bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=200 -d=5
 ```
 
 # Unit Tests
