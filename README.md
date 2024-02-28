@@ -18,7 +18,10 @@ rm -f output.txt
 
 https://github.com/jamolnng/argparse
 
-# First Try
+# First Try (Day 1) - 2024-02-26
+
+## Whiteboard
+![](whiteboard.png)
 
 ```
 ➜  vast git:(main) bazel build :main && ./bazel-bin/main
@@ -44,7 +47,9 @@ libc++abi: terminating due to uncaught exception of type std::__1::bad_weak_ptr:
 [1]    51564 abort      ./bazel-bin/main
 ```
 
-# Second Try
+# Second Try (Day 2) - 2024-02-27
+
+![](todo_list.png)
 
 * Bug fix for `bad_weak_ptr`: in the `truck_work` thread function, the `Truck` was constructed on the stack rather than a `shared_ptr` on the heap, thus the reference count reached `0` when `shared_from_this()` was invoked.
   * https://github.com/claytonjwong/vast/commit/f3f3271240e6bbcc604046f9f2bb968e6a3416ca#diff-608d8de3fba954c50110b6d7386988f27295de845e9d7174e40095ba5efcf1bbR38
@@ -1200,7 +1205,7 @@ LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage sta
 
 ![](Class.png)
 
-# Third Try
+# Third Try (Day 3) - 2024-02-28
 
 * Bug fixes for wait durations!  `std::chrono::duration<Rep,Period>`
   * The duration casts `Rep = Long`, so the fractional values are lost! (that's why we see `0` printed in the Second Try above)
