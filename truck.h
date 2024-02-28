@@ -27,8 +27,8 @@ public:
         _state = State::Unloading;
         auto wait = _time.getUnloadTime();
         std::this_thread::sleep_for(wait);
-        _state = State::Unloaded;
         logger::log(__LINE__, __FILE__, "unloading end");
+        _state = State::Unloaded;
         unload_ok.notify_one();
         // TODO: invoke logging module for performance metrics (how long each truck is in each state)
         //       actually, maybe just notify a listener?
