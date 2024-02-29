@@ -13,8 +13,8 @@ class joining_thread as "🧶 joining_thread" {
 }
 
 class logger as "🪵 logger" {
-    +log()
-    +get_time()
+    {static} -string get_time()
+    {static} +void log()
 }
 
 class main as "🎮 main"

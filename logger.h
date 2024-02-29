@@ -14,6 +14,7 @@ public:
         (os << ... << std::forward<Args>(args)) << '\n';
         std::cout << os.str(), flush(std::cout);
     }
+private:
     static std::string get_time() {
         auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         std::string time_string = ctime(&time);
