@@ -46,9 +46,13 @@ cc_library(
     hdrs = [
         "truck.h",
     ],
+    srcs = [
+        "truck.cpp",
+    ],
     deps = [
         ":logger",
         ":time_keeper",
+        ":threadsafe_queue",
     ],
 )
 

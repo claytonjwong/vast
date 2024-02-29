@@ -76,7 +76,6 @@ void run(int argc, const char* argv[]) {
         TIME_RATIO, " for duration ", SIMULATION_HOURS, " hours");
     auto simulation_duration = std::chrono::seconds(SIMULATION_HOURS * 60 * 60) / TIME_RATIO;  // multiply by 60 * 60 to convert hours to seconds
     logger::log(__LINE__, __FILE__, "🎮 simulation duration ", simulation_duration.count(), " seconds (our world's real-time)");
-
     //
     // servers
     //
@@ -94,7 +93,6 @@ void run(int argc, const char* argv[]) {
     };
     joining_thread unload_queue_thread{ unload_queue_work };
     unload_queue_thread.detach();
-
     //
     // clients
     //
@@ -114,7 +112,6 @@ void run(int argc, const char* argv[]) {
     for (auto& thread: truck_threads) {
         thread.join();
     }
-
     //
     // metrics
     //
