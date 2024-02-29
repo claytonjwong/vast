@@ -1569,3 +1569,665 @@ LOW: Wed Feb 28 09:40:32 2024 - truck - unloading end
 Ancedotal evidence suggests this is fixed, since the segmentation fault previously occurred 100% of the time after the simulation ended.
 
 ![](segfault_validation.png)
+
+## 🛰️ Storage Station Performance Metrics
+
+🎯 What matters is how much Helium-3 each truck and storage station queue unloads
+
+```
+➜  vast git:(main) ✗ bazel build :main && ./bazel-bin/main -t=10 -q=3 -r=400 -d=10
+INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
+INFO: Found 1 target...
+Target //:main up-to-date:
+  bazel-bin/main
+INFO: Elapsed time: 1.205s, Critical Path: 1.10s
+INFO: 5 processes: 1 internal, 4 darwin-sandbox.
+INFO: Build completed successfully, 5 total actions
+Wed Feb 28 18:08:30 2024 line 54 main.cpp - 🎮 starting simulation with 10 truck(s) and 3 unloading queue(s) using time warp ratio 400 for duration 10 hours
+Wed Feb 28 18:08:30 2024 line 58 main.cpp - 🎮 simulation duration 90 seconds (our world's real-time)
+Wed Feb 28 18:08:30 2024 line 25 storage_station.cpp - 🛰️ initializing storage station queues
+Wed Feb 28 18:08:30 2024 line 63 main.cpp - 🗑️ running detached thread for unload_queue_work 🔨
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[0] work start 🚀
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[0] mine() begin
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[1] work start 🚀
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[3] work start 🚀
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[3] mine() begin
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[2] work start 🚀
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[1] mine() begin
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[5] work start 🚀
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[5] mine() begin
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[4] work start 🚀
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[2] mine() begin
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[8] work start 🚀
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[7] work start 🚀
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[9] work start 🚀
+Wed Feb 28 18:08:30 2024 line 76 main.cpp - 🚚 truck[6] work start 🚀
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[8] mine() begin
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[6] mine() begin
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[4] mine() begin
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[9] mine() begin
+Wed Feb 28 18:08:30 2024 line 77 ./truck.h - 🚚 truck[7] mine() begin
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:30 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 2 random hour(s) 🎲
+Wed Feb 28 18:08:30 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.005 hours = 18 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[3] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[3] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[8] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[8] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[7] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[7] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[0] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[0] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[9] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[9] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[5] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[5] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[1] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[1] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[2] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[2] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[6] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[6] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:48 2024 line 81 ./truck.h - 🚚 truck[4] mine() end
+Wed Feb 28 18:08:48 2024 line 68 ./truck.h - 🚚 truck[4] drive() begin
+Wed Feb 28 18:08:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[3] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[3] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[3] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[3] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[8] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[8] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[8] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[8] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[7] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[7] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[7] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[7] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[2] of size 0
+Wed Feb 28 18:08:52 2024 line 29 ./truck.h - 🚚 truck[3] unloading begin
+Wed Feb 28 18:08:52 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:52 2024 line 29 ./truck.h - 🚚 truck[8] unloading begin
+Wed Feb 28 18:08:52 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:52 2024 line 29 ./truck.h - 🚚 truck[7] unloading begin
+Wed Feb 28 18:08:52 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[0] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[0] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[0] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[0] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[9] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[9] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[9] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[9] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[5] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[5] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[5] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[5] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[1] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[1] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[1] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[1] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[2] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[2] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[2] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[2] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[6] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[6] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[6] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[6] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 72 ./truck.h - 🚚 truck[4] drive() end
+Wed Feb 28 18:08:52 2024 line 56 ./truck.h - 🚚 truck[4] enqueue() begin
+Wed Feb 28 18:08:52 2024 line 59 ./truck.h - 🚚 truck[4] enqueue() end
+Wed Feb 28 18:08:52 2024 line 62 ./truck.h - 🚚 truck[4] wait_for_unload_ok() begin
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[2] of size 0
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 1
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 1
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[2] of size 1
+Wed Feb 28 18:08:52 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:08:52 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 2
+Wed Feb 28 18:08:53 2024 line 33 ./truck.h - 🚚 truck[7] unloading end
+Wed Feb 28 18:08:53 2024 line 33 ./truck.h - 🚚 truck[3] unloading end
+Wed Feb 28 18:08:53 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[7] at storage station 🪣 queue[2]
+Wed Feb 28 18:08:53 2024 line 33 ./truck.h - 🚚 truck[8] unloading end
+Wed Feb 28 18:08:53 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[3] at storage station 🪣 queue[0]
+Wed Feb 28 18:08:53 2024 line 29 ./truck.h - 🚚 truck[5] unloading begin
+Wed Feb 28 18:08:53 2024 line 29 ./truck.h - 🚚 truck[0] unloading begin
+Wed Feb 28 18:08:53 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:53 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:53 2024 line 65 ./truck.h - 🚚 truck[7] wait_for_unload_ok() end
+Wed Feb 28 18:08:53 2024 line 68 ./truck.h - 🚚 truck[7] drive() begin
+Wed Feb 28 18:08:53 2024 line 65 ./truck.h - 🚚 truck[8] wait_for_unload_ok() end
+Wed Feb 28 18:08:53 2024 line 65 ./truck.h - 🚚 truck[3] wait_for_unload_ok() end
+Wed Feb 28 18:08:53 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:53 2024 line 68 ./truck.h - 🚚 truck[3] drive() begin
+Wed Feb 28 18:08:53 2024 line 68 ./truck.h - 🚚 truck[8] drive() begin
+Wed Feb 28 18:08:53 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:53 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:53 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[8] at storage station 🪣 queue[1]
+Wed Feb 28 18:08:53 2024 line 29 ./truck.h - 🚚 truck[9] unloading begin
+Wed Feb 28 18:08:53 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:54 2024 line 33 ./truck.h - 🚚 truck[5] unloading end
+Wed Feb 28 18:08:54 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[5] at storage station 🪣 queue[2]
+Wed Feb 28 18:08:54 2024 line 29 ./truck.h - 🚚 truck[6] unloading begin
+Wed Feb 28 18:08:54 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:54 2024 line 33 ./truck.h - 🚚 truck[0] unloading end
+Wed Feb 28 18:08:54 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[0] at storage station 🪣 queue[0]
+Wed Feb 28 18:08:54 2024 line 29 ./truck.h - 🚚 truck[1] unloading begin
+Wed Feb 28 18:08:54 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:54 2024 line 65 ./truck.h - 🚚 truck[5] wait_for_unload_ok() end
+Wed Feb 28 18:08:54 2024 line 68 ./truck.h - 🚚 truck[5] drive() begin
+Wed Feb 28 18:08:54 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:54 2024 line 33 ./truck.h - 🚚 truck[9] unloading end
+Wed Feb 28 18:08:54 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[9] at storage station 🪣 queue[1]
+Wed Feb 28 18:08:54 2024 line 29 ./truck.h - 🚚 truck[2] unloading begin
+Wed Feb 28 18:08:54 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:54 2024 line 65 ./truck.h - 🚚 truck[0] wait_for_unload_ok() end
+Wed Feb 28 18:08:54 2024 line 65 ./truck.h - 🚚 truck[9] wait_for_unload_ok() end
+Wed Feb 28 18:08:54 2024 line 68 ./truck.h - 🚚 truck[0] drive() begin
+Wed Feb 28 18:08:54 2024 line 68 ./truck.h - 🚚 truck[9] drive() begin
+Wed Feb 28 18:08:54 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:54 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:54 2024 line 33 ./truck.h - 🚚 truck[6] unloading end
+Wed Feb 28 18:08:54 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[6] at storage station 🪣 queue[2]
+Wed Feb 28 18:08:54 2024 line 33 ./truck.h - 🚚 truck[1] unloading end
+Wed Feb 28 18:08:54 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[1] at storage station 🪣 queue[0]
+Wed Feb 28 18:08:54 2024 line 29 ./truck.h - 🚚 truck[4] unloading begin
+Wed Feb 28 18:08:54 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:08:54 2024 line 65 ./truck.h - 🚚 truck[6] wait_for_unload_ok() end
+Wed Feb 28 18:08:54 2024 line 68 ./truck.h - 🚚 truck[6] drive() begin
+Wed Feb 28 18:08:54 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:54 2024 line 65 ./truck.h - 🚚 truck[1] wait_for_unload_ok() end
+Wed Feb 28 18:08:54 2024 line 68 ./truck.h - 🚚 truck[1] drive() begin
+Wed Feb 28 18:08:54 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:54 2024 line 33 ./truck.h - 🚚 truck[2] unloading end
+Wed Feb 28 18:08:54 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[2] at storage station 🪣 queue[1]
+Wed Feb 28 18:08:54 2024 line 65 ./truck.h - 🚚 truck[2] wait_for_unload_ok() end
+Wed Feb 28 18:08:54 2024 line 68 ./truck.h - 🚚 truck[2] drive() begin
+Wed Feb 28 18:08:54 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:55 2024 line 33 ./truck.h - 🚚 truck[4] unloading end
+Wed Feb 28 18:08:55 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[4] at storage station 🪣 queue[0]
+Wed Feb 28 18:08:55 2024 line 65 ./truck.h - 🚚 truck[4] wait_for_unload_ok() end
+Wed Feb 28 18:08:55 2024 line 68 ./truck.h - 🚚 truck[4] drive() begin
+Wed Feb 28 18:08:55 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:08:57 2024 line 72 ./truck.h - 🚚 truck[3] drive() end
+Wed Feb 28 18:08:57 2024 line 77 ./truck.h - 🚚 truck[3] mine() begin
+Wed Feb 28 18:08:57 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:57 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:08:57 2024 line 72 ./truck.h - 🚚 truck[7] drive() end
+Wed Feb 28 18:08:57 2024 line 77 ./truck.h - 🚚 truck[7] mine() begin
+Wed Feb 28 18:08:57 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:57 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:08:57 2024 line 72 ./truck.h - 🚚 truck[8] drive() end
+Wed Feb 28 18:08:57 2024 line 77 ./truck.h - 🚚 truck[8] mine() begin
+Wed Feb 28 18:08:57 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:57 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:08:58 2024 line 72 ./truck.h - 🚚 truck[5] drive() end
+Wed Feb 28 18:08:58 2024 line 77 ./truck.h - 🚚 truck[5] mine() begin
+Wed Feb 28 18:08:58 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:58 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:08:58 2024 line 72 ./truck.h - 🚚 truck[9] drive() end
+Wed Feb 28 18:08:58 2024 line 77 ./truck.h - 🚚 truck[9] mine() begin
+Wed Feb 28 18:08:58 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:58 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:08:58 2024 line 72 ./truck.h - 🚚 truck[0] drive() end
+Wed Feb 28 18:08:58 2024 line 77 ./truck.h - 🚚 truck[0] mine() begin
+Wed Feb 28 18:08:58 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:58 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:08:59 2024 line 72 ./truck.h - 🚚 truck[2] drive() end
+Wed Feb 28 18:08:59 2024 line 77 ./truck.h - 🚚 truck[2] mine() begin
+Wed Feb 28 18:08:59 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:59 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:08:59 2024 line 72 ./truck.h - 🚚 truck[6] drive() end
+Wed Feb 28 18:08:59 2024 line 77 ./truck.h - 🚚 truck[6] mine() begin
+Wed Feb 28 18:08:59 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:59 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:08:59 2024 line 72 ./truck.h - 🚚 truck[1] drive() end
+Wed Feb 28 18:08:59 2024 line 77 ./truck.h - 🚚 truck[1] mine() begin
+Wed Feb 28 18:08:59 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:08:59 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:09:00 2024 line 72 ./truck.h - 🚚 truck[4] drive() end
+Wed Feb 28 18:09:00 2024 line 77 ./truck.h - 🚚 truck[4] mine() begin
+Wed Feb 28 18:09:00 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 5 random hour(s) 🎲
+Wed Feb 28 18:09:00 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0125 hours = 45 seconds
+Wed Feb 28 18:09:42 2024 line 81 ./truck.h - 🚚 truck[3] mine() end
+Wed Feb 28 18:09:42 2024 line 68 ./truck.h - 🚚 truck[3] drive() begin
+Wed Feb 28 18:09:42 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:42 2024 line 81 ./truck.h - 🚚 truck[8] mine() end
+Wed Feb 28 18:09:42 2024 line 68 ./truck.h - 🚚 truck[8] drive() begin
+Wed Feb 28 18:09:42 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:42 2024 line 81 ./truck.h - 🚚 truck[7] mine() end
+Wed Feb 28 18:09:42 2024 line 68 ./truck.h - 🚚 truck[7] drive() begin
+Wed Feb 28 18:09:42 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:43 2024 line 81 ./truck.h - 🚚 truck[5] mine() end
+Wed Feb 28 18:09:43 2024 line 68 ./truck.h - 🚚 truck[5] drive() begin
+Wed Feb 28 18:09:43 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:43 2024 line 81 ./truck.h - 🚚 truck[9] mine() end
+Wed Feb 28 18:09:43 2024 line 68 ./truck.h - 🚚 truck[9] drive() begin
+Wed Feb 28 18:09:43 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:43 2024 line 81 ./truck.h - 🚚 truck[0] mine() end
+Wed Feb 28 18:09:43 2024 line 68 ./truck.h - 🚚 truck[0] drive() begin
+Wed Feb 28 18:09:43 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:44 2024 line 81 ./truck.h - 🚚 truck[2] mine() end
+Wed Feb 28 18:09:44 2024 line 68 ./truck.h - 🚚 truck[2] drive() begin
+Wed Feb 28 18:09:44 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:44 2024 line 81 ./truck.h - 🚚 truck[6] mine() end
+Wed Feb 28 18:09:44 2024 line 68 ./truck.h - 🚚 truck[6] drive() begin
+Wed Feb 28 18:09:44 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:44 2024 line 81 ./truck.h - 🚚 truck[1] mine() end
+Wed Feb 28 18:09:44 2024 line 68 ./truck.h - 🚚 truck[1] drive() begin
+Wed Feb 28 18:09:44 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:45 2024 line 81 ./truck.h - 🚚 truck[4] mine() end
+Wed Feb 28 18:09:45 2024 line 68 ./truck.h - 🚚 truck[4] drive() begin
+Wed Feb 28 18:09:45 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:47 2024 line 72 ./truck.h - 🚚 truck[3] drive() end
+Wed Feb 28 18:09:47 2024 line 56 ./truck.h - 🚚 truck[3] enqueue() begin
+Wed Feb 28 18:09:47 2024 line 59 ./truck.h - 🚚 truck[3] enqueue() end
+Wed Feb 28 18:09:47 2024 line 62 ./truck.h - 🚚 truck[3] wait_for_unload_ok() begin
+Wed Feb 28 18:09:47 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:47 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:09:47 2024 line 29 ./truck.h - 🚚 truck[3] unloading begin
+Wed Feb 28 18:09:47 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:47 2024 line 72 ./truck.h - 🚚 truck[8] drive() end
+Wed Feb 28 18:09:47 2024 line 56 ./truck.h - 🚚 truck[8] enqueue() begin
+Wed Feb 28 18:09:47 2024 line 59 ./truck.h - 🚚 truck[8] enqueue() end
+Wed Feb 28 18:09:47 2024 line 62 ./truck.h - 🚚 truck[8] wait_for_unload_ok() begin
+Wed Feb 28 18:09:47 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:47 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:09:47 2024 line 72 ./truck.h - 🚚 truck[7] drive() end
+Wed Feb 28 18:09:47 2024 line 56 ./truck.h - 🚚 truck[7] enqueue() begin
+Wed Feb 28 18:09:47 2024 line 59 ./truck.h - 🚚 truck[7] enqueue() end
+Wed Feb 28 18:09:47 2024 line 62 ./truck.h - 🚚 truck[7] wait_for_unload_ok() begin
+Wed Feb 28 18:09:47 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:47 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:09:47 2024 line 29 ./truck.h - 🚚 truck[7] unloading begin
+Wed Feb 28 18:09:47 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:48 2024 line 33 ./truck.h - 🚚 truck[3] unloading end
+Wed Feb 28 18:09:48 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[3] at storage station 🪣 queue[0]
+Wed Feb 28 18:09:48 2024 line 29 ./truck.h - 🚚 truck[8] unloading begin
+Wed Feb 28 18:09:48 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:48 2024 line 65 ./truck.h - 🚚 truck[3] wait_for_unload_ok() end
+Wed Feb 28 18:09:48 2024 line 68 ./truck.h - 🚚 truck[3] drive() begin
+Wed Feb 28 18:09:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:48 2024 line 72 ./truck.h - 🚚 truck[5] drive() end
+Wed Feb 28 18:09:48 2024 line 56 ./truck.h - 🚚 truck[5] enqueue() begin
+Wed Feb 28 18:09:48 2024 line 59 ./truck.h - 🚚 truck[5] enqueue() end
+Wed Feb 28 18:09:48 2024 line 62 ./truck.h - 🚚 truck[5] wait_for_unload_ok() begin
+Wed Feb 28 18:09:48 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:48 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:09:48 2024 line 72 ./truck.h - 🚚 truck[9] drive() end
+Wed Feb 28 18:09:48 2024 line 56 ./truck.h - 🚚 truck[9] enqueue() begin
+Wed Feb 28 18:09:48 2024 line 59 ./truck.h - 🚚 truck[9] enqueue() end
+Wed Feb 28 18:09:48 2024 line 62 ./truck.h - 🚚 truck[9] wait_for_unload_ok() begin
+Wed Feb 28 18:09:48 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:48 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:09:48 2024 line 72 ./truck.h - 🚚 truck[0] drive() end
+Wed Feb 28 18:09:48 2024 line 56 ./truck.h - 🚚 truck[0] enqueue() begin
+Wed Feb 28 18:09:48 2024 line 59 ./truck.h - 🚚 truck[0] enqueue() end
+Wed Feb 28 18:09:48 2024 line 62 ./truck.h - 🚚 truck[0] wait_for_unload_ok() begin
+Wed Feb 28 18:09:48 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:48 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[2] of size 0
+Wed Feb 28 18:09:48 2024 line 29 ./truck.h - 🚚 truck[0] unloading begin
+Wed Feb 28 18:09:48 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:48 2024 line 33 ./truck.h - 🚚 truck[7] unloading end
+Wed Feb 28 18:09:48 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[7] at storage station 🪣 queue[1]
+Wed Feb 28 18:09:48 2024 line 29 ./truck.h - 🚚 truck[9] unloading begin
+Wed Feb 28 18:09:48 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:48 2024 line 65 ./truck.h - 🚚 truck[7] wait_for_unload_ok() end
+Wed Feb 28 18:09:48 2024 line 68 ./truck.h - 🚚 truck[7] drive() begin
+Wed Feb 28 18:09:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:48 2024 line 33 ./truck.h - 🚚 truck[8] unloading end
+Wed Feb 28 18:09:48 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[8] at storage station 🪣 queue[0]
+Wed Feb 28 18:09:48 2024 line 29 ./truck.h - 🚚 truck[5] unloading begin
+Wed Feb 28 18:09:48 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:48 2024 line 65 ./truck.h - 🚚 truck[8] wait_for_unload_ok() end
+Wed Feb 28 18:09:48 2024 line 68 ./truck.h - 🚚 truck[8] drive() begin
+Wed Feb 28 18:09:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:48 2024 line 72 ./truck.h - 🚚 truck[2] drive() end
+Wed Feb 28 18:09:48 2024 line 56 ./truck.h - 🚚 truck[2] enqueue() begin
+Wed Feb 28 18:09:48 2024 line 59 ./truck.h - 🚚 truck[2] enqueue() end
+Wed Feb 28 18:09:48 2024 line 62 ./truck.h - 🚚 truck[2] wait_for_unload_ok() begin
+Wed Feb 28 18:09:48 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:48 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:09:48 2024 line 33 ./truck.h - 🚚 truck[0] unloading end
+Wed Feb 28 18:09:48 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[0] at storage station 🪣 queue[2]
+Wed Feb 28 18:09:48 2024 line 72 ./truck.h - 🚚 truck[6] drive() end
+Wed Feb 28 18:09:48 2024 line 56 ./truck.h - 🚚 truck[6] enqueue() begin
+Wed Feb 28 18:09:48 2024 line 59 ./truck.h - 🚚 truck[6] enqueue() end
+Wed Feb 28 18:09:48 2024 line 62 ./truck.h - 🚚 truck[6] wait_for_unload_ok() begin
+Wed Feb 28 18:09:48 2024 line 72 ./truck.h - 🚚 truck[1] drive() end
+Wed Feb 28 18:09:48 2024 line 56 ./truck.h - 🚚 truck[1] enqueue() begin
+Wed Feb 28 18:09:48 2024 line 59 ./truck.h - 🚚 truck[1] enqueue() end
+Wed Feb 28 18:09:48 2024 line 62 ./truck.h - 🚚 truck[1] wait_for_unload_ok() begin
+Wed Feb 28 18:09:48 2024 line 33 ./truck.h - 🚚 truck[9] unloading end
+Wed Feb 28 18:09:48 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[9] at storage station 🪣 queue[1]
+Wed Feb 28 18:09:48 2024 line 65 ./truck.h - 🚚 truck[0] wait_for_unload_ok() end
+Wed Feb 28 18:09:48 2024 line 68 ./truck.h - 🚚 truck[0] drive() begin
+Wed Feb 28 18:09:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:48 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:48 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:09:48 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:48 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[2] of size 0
+Wed Feb 28 18:09:48 2024 line 65 ./truck.h - 🚚 truck[9] wait_for_unload_ok() end
+Wed Feb 28 18:09:48 2024 line 68 ./truck.h - 🚚 truck[9] drive() begin
+Wed Feb 28 18:09:48 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:48 2024 line 29 ./truck.h - 🚚 truck[6] unloading begin
+Wed Feb 28 18:09:48 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:48 2024 line 29 ./truck.h - 🚚 truck[1] unloading begin
+Wed Feb 28 18:09:48 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:49 2024 line 33 ./truck.h - 🚚 truck[5] unloading end
+Wed Feb 28 18:09:49 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[5] at storage station 🪣 queue[0]
+Wed Feb 28 18:09:49 2024 line 29 ./truck.h - 🚚 truck[2] unloading begin
+Wed Feb 28 18:09:49 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:49 2024 line 65 ./truck.h - 🚚 truck[5] wait_for_unload_ok() end
+Wed Feb 28 18:09:49 2024 line 68 ./truck.h - 🚚 truck[5] drive() begin
+Wed Feb 28 18:09:49 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:49 2024 line 72 ./truck.h - 🚚 truck[4] drive() end
+Wed Feb 28 18:09:49 2024 line 56 ./truck.h - 🚚 truck[4] enqueue() begin
+Wed Feb 28 18:09:49 2024 line 59 ./truck.h - 🚚 truck[4] enqueue() end
+Wed Feb 28 18:09:49 2024 line 62 ./truck.h - 🚚 truck[4] wait_for_unload_ok() begin
+Wed Feb 28 18:09:49 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:09:49 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:09:49 2024 line 33 ./truck.h - 🚚 truck[6] unloading end
+Wed Feb 28 18:09:49 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[6] at storage station 🪣 queue[1]
+Wed Feb 28 18:09:49 2024 line 33 ./truck.h - 🚚 truck[1] unloading end
+Wed Feb 28 18:09:49 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[1] at storage station 🪣 queue[2]
+Wed Feb 28 18:09:49 2024 line 65 ./truck.h - 🚚 truck[6] wait_for_unload_ok() end
+Wed Feb 28 18:09:49 2024 line 68 ./truck.h - 🚚 truck[6] drive() begin
+Wed Feb 28 18:09:49 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:49 2024 line 65 ./truck.h - 🚚 truck[1] wait_for_unload_ok() end
+Wed Feb 28 18:09:49 2024 line 68 ./truck.h - 🚚 truck[1] drive() begin
+Wed Feb 28 18:09:49 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:50 2024 line 33 ./truck.h - 🚚 truck[2] unloading end
+Wed Feb 28 18:09:50 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[2] at storage station 🪣 queue[0]
+Wed Feb 28 18:09:50 2024 line 29 ./truck.h - 🚚 truck[4] unloading begin
+Wed Feb 28 18:09:50 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:09:50 2024 line 65 ./truck.h - 🚚 truck[2] wait_for_unload_ok() end
+Wed Feb 28 18:09:50 2024 line 68 ./truck.h - 🚚 truck[2] drive() begin
+Wed Feb 28 18:09:50 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:51 2024 line 33 ./truck.h - 🚚 truck[4] unloading end
+Wed Feb 28 18:09:51 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[4] at storage station 🪣 queue[0]
+Wed Feb 28 18:09:51 2024 line 65 ./truck.h - 🚚 truck[4] wait_for_unload_ok() end
+Wed Feb 28 18:09:51 2024 line 68 ./truck.h - 🚚 truck[4] drive() begin
+Wed Feb 28 18:09:51 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:09:52 2024 line 72 ./truck.h - 🚚 truck[3] drive() end
+Wed Feb 28 18:09:52 2024 line 77 ./truck.h - 🚚 truck[3] mine() begin
+Wed Feb 28 18:09:52 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:52 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:52 2024 line 72 ./truck.h - 🚚 truck[7] drive() end
+Wed Feb 28 18:09:52 2024 line 77 ./truck.h - 🚚 truck[7] mine() begin
+Wed Feb 28 18:09:52 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:52 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:53 2024 line 72 ./truck.h - 🚚 truck[8] drive() end
+Wed Feb 28 18:09:53 2024 line 77 ./truck.h - 🚚 truck[8] mine() begin
+Wed Feb 28 18:09:53 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:53 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:53 2024 line 72 ./truck.h - 🚚 truck[0] drive() end
+Wed Feb 28 18:09:53 2024 line 77 ./truck.h - 🚚 truck[0] mine() begin
+Wed Feb 28 18:09:53 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:53 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:53 2024 line 72 ./truck.h - 🚚 truck[9] drive() end
+Wed Feb 28 18:09:53 2024 line 77 ./truck.h - 🚚 truck[9] mine() begin
+Wed Feb 28 18:09:53 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:53 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:54 2024 line 72 ./truck.h - 🚚 truck[5] drive() end
+Wed Feb 28 18:09:54 2024 line 77 ./truck.h - 🚚 truck[5] mine() begin
+Wed Feb 28 18:09:54 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:54 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:54 2024 line 72 ./truck.h - 🚚 truck[1] drive() end
+Wed Feb 28 18:09:54 2024 line 77 ./truck.h - 🚚 truck[1] mine() begin
+Wed Feb 28 18:09:54 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:54 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:54 2024 line 72 ./truck.h - 🚚 truck[6] drive() end
+Wed Feb 28 18:09:54 2024 line 77 ./truck.h - 🚚 truck[6] mine() begin
+Wed Feb 28 18:09:54 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:54 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:54 2024 line 72 ./truck.h - 🚚 truck[2] drive() end
+Wed Feb 28 18:09:54 2024 line 77 ./truck.h - 🚚 truck[2] mine() begin
+Wed Feb 28 18:09:54 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:54 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:09:55 2024 line 72 ./truck.h - 🚚 truck[4] drive() end
+Wed Feb 28 18:09:55 2024 line 77 ./truck.h - 🚚 truck[4] mine() begin
+Wed Feb 28 18:09:55 2024 line 33 time_keeper.cpp - ⏰ _getMineTime() = 1 random hour(s) 🎲
+Wed Feb 28 18:09:55 2024 line 10 time_keeper.cpp - ⏰ getMineTime() = 0.0025 hours = 9 seconds
+Wed Feb 28 18:10:01 2024 line 81 ./truck.h - 🚚 truck[3] mine() end
+Wed Feb 28 18:10:01 2024 line 68 ./truck.h - 🚚 truck[3] drive() begin
+Wed Feb 28 18:10:01 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:01 2024 line 81 ./truck.h - 🚚 truck[7] mine() end
+Wed Feb 28 18:10:01 2024 line 68 ./truck.h - 🚚 truck[7] drive() begin
+Wed Feb 28 18:10:01 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:02 2024 line 81 ./truck.h - 🚚 truck[8] mine() end
+Wed Feb 28 18:10:02 2024 line 68 ./truck.h - 🚚 truck[8] drive() begin
+Wed Feb 28 18:10:02 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:02 2024 line 81 ./truck.h - 🚚 truck[0] mine() end
+Wed Feb 28 18:10:02 2024 line 68 ./truck.h - 🚚 truck[0] drive() begin
+Wed Feb 28 18:10:02 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:02 2024 line 81 ./truck.h - 🚚 truck[9] mine() end
+Wed Feb 28 18:10:02 2024 line 68 ./truck.h - 🚚 truck[9] drive() begin
+Wed Feb 28 18:10:02 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:03 2024 line 81 ./truck.h - 🚚 truck[5] mine() end
+Wed Feb 28 18:10:03 2024 line 68 ./truck.h - 🚚 truck[5] drive() begin
+Wed Feb 28 18:10:03 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:03 2024 line 81 ./truck.h - 🚚 truck[1] mine() end
+Wed Feb 28 18:10:03 2024 line 68 ./truck.h - 🚚 truck[1] drive() begin
+Wed Feb 28 18:10:03 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:03 2024 line 81 ./truck.h - 🚚 truck[6] mine() end
+Wed Feb 28 18:10:03 2024 line 68 ./truck.h - 🚚 truck[6] drive() begin
+Wed Feb 28 18:10:03 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:03 2024 line 81 ./truck.h - 🚚 truck[2] mine() end
+Wed Feb 28 18:10:03 2024 line 68 ./truck.h - 🚚 truck[2] drive() begin
+Wed Feb 28 18:10:03 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:04 2024 line 81 ./truck.h - 🚚 truck[4] mine() end
+Wed Feb 28 18:10:04 2024 line 68 ./truck.h - 🚚 truck[4] drive() begin
+Wed Feb 28 18:10:04 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:06 2024 line 72 ./truck.h - 🚚 truck[3] drive() end
+Wed Feb 28 18:10:06 2024 line 56 ./truck.h - 🚚 truck[3] enqueue() begin
+Wed Feb 28 18:10:06 2024 line 59 ./truck.h - 🚚 truck[3] enqueue() end
+Wed Feb 28 18:10:06 2024 line 62 ./truck.h - 🚚 truck[3] wait_for_unload_ok() begin
+Wed Feb 28 18:10:06 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:06 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:10:06 2024 line 29 ./truck.h - 🚚 truck[3] unloading begin
+Wed Feb 28 18:10:06 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:06 2024 line 72 ./truck.h - 🚚 truck[7] drive() end
+Wed Feb 28 18:10:06 2024 line 56 ./truck.h - 🚚 truck[7] enqueue() begin
+Wed Feb 28 18:10:06 2024 line 59 ./truck.h - 🚚 truck[7] enqueue() end
+Wed Feb 28 18:10:06 2024 line 62 ./truck.h - 🚚 truck[7] wait_for_unload_ok() begin
+Wed Feb 28 18:10:06 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:06 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:10:06 2024 line 72 ./truck.h - 🚚 truck[8] drive() end
+Wed Feb 28 18:10:06 2024 line 56 ./truck.h - 🚚 truck[8] enqueue() begin
+Wed Feb 28 18:10:06 2024 line 59 ./truck.h - 🚚 truck[8] enqueue() end
+Wed Feb 28 18:10:06 2024 line 62 ./truck.h - 🚚 truck[8] wait_for_unload_ok() begin
+Wed Feb 28 18:10:06 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:06 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:10:06 2024 line 29 ./truck.h - 🚚 truck[8] unloading begin
+Wed Feb 28 18:10:06 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:06 2024 line 33 ./truck.h - 🚚 truck[3] unloading end
+Wed Feb 28 18:10:06 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[3] at storage station 🪣 queue[0]
+Wed Feb 28 18:10:06 2024 line 29 ./truck.h - 🚚 truck[7] unloading begin
+Wed Feb 28 18:10:06 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:06 2024 line 65 ./truck.h - 🚚 truck[3] wait_for_unload_ok() end
+Wed Feb 28 18:10:06 2024 line 68 ./truck.h - 🚚 truck[3] drive() begin
+Wed Feb 28 18:10:06 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:06 2024 line 72 ./truck.h - 🚚 truck[0] drive() end
+Wed Feb 28 18:10:06 2024 line 56 ./truck.h - 🚚 truck[0] enqueue() begin
+Wed Feb 28 18:10:06 2024 line 59 ./truck.h - 🚚 truck[0] enqueue() end
+Wed Feb 28 18:10:06 2024 line 62 ./truck.h - 🚚 truck[0] wait_for_unload_ok() begin
+Wed Feb 28 18:10:06 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:06 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:10:06 2024 line 72 ./truck.h - 🚚 truck[9] drive() end
+Wed Feb 28 18:10:06 2024 line 56 ./truck.h - 🚚 truck[9] enqueue() begin
+Wed Feb 28 18:10:06 2024 line 59 ./truck.h - 🚚 truck[9] enqueue() end
+Wed Feb 28 18:10:06 2024 line 62 ./truck.h - 🚚 truck[9] wait_for_unload_ok() begin
+Wed Feb 28 18:10:06 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:06 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:10:07 2024 line 33 ./truck.h - 🚚 truck[8] unloading end
+Wed Feb 28 18:10:07 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[8] at storage station 🪣 queue[1]
+Wed Feb 28 18:10:07 2024 line 29 ./truck.h - 🚚 truck[9] unloading begin
+Wed Feb 28 18:10:07 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:07 2024 line 33 ./truck.h - 🚚 truck[7] unloading end
+Wed Feb 28 18:10:07 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[7] at storage station 🪣 queue[0]
+Wed Feb 28 18:10:07 2024 line 29 ./truck.h - 🚚 truck[0] unloading begin
+Wed Feb 28 18:10:07 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:07 2024 line 65 ./truck.h - 🚚 truck[8] wait_for_unload_ok() end
+Wed Feb 28 18:10:07 2024 line 68 ./truck.h - 🚚 truck[8] drive() begin
+Wed Feb 28 18:10:07 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:07 2024 line 65 ./truck.h - 🚚 truck[7] wait_for_unload_ok() end
+Wed Feb 28 18:10:07 2024 line 68 ./truck.h - 🚚 truck[7] drive() begin
+Wed Feb 28 18:10:07 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:07 2024 line 72 ./truck.h - 🚚 truck[5] drive() end
+Wed Feb 28 18:10:07 2024 line 56 ./truck.h - 🚚 truck[5] enqueue() begin
+Wed Feb 28 18:10:07 2024 line 59 ./truck.h - 🚚 truck[5] enqueue() end
+Wed Feb 28 18:10:07 2024 line 62 ./truck.h - 🚚 truck[5] wait_for_unload_ok() begin
+Wed Feb 28 18:10:07 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:07 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:10:07 2024 line 72 ./truck.h - 🚚 truck[1] drive() end
+Wed Feb 28 18:10:07 2024 line 56 ./truck.h - 🚚 truck[1] enqueue() begin
+Wed Feb 28 18:10:07 2024 line 59 ./truck.h - 🚚 truck[1] enqueue() end
+Wed Feb 28 18:10:07 2024 line 62 ./truck.h - 🚚 truck[1] wait_for_unload_ok() begin
+Wed Feb 28 18:10:07 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:07 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:10:07 2024 line 72 ./truck.h - 🚚 truck[6] drive() end
+Wed Feb 28 18:10:07 2024 line 56 ./truck.h - 🚚 truck[6] enqueue() begin
+Wed Feb 28 18:10:07 2024 line 59 ./truck.h - 🚚 truck[6] enqueue() end
+Wed Feb 28 18:10:07 2024 line 62 ./truck.h - 🚚 truck[6] wait_for_unload_ok() begin
+Wed Feb 28 18:10:07 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:07 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[2] of size 0
+Wed Feb 28 18:10:07 2024 line 29 ./truck.h - 🚚 truck[6] unloading begin
+Wed Feb 28 18:10:07 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:08 2024 line 33 ./truck.h - 🚚 truck[9] unloading end
+Wed Feb 28 18:10:08 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[9] at storage station 🪣 queue[1]
+Wed Feb 28 18:10:08 2024 line 29 ./truck.h - 🚚 truck[1] unloading begin
+Wed Feb 28 18:10:08 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:08 2024 line 33 ./truck.h - 🚚 truck[0] unloading end
+Wed Feb 28 18:10:08 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[0] at storage station 🪣 queue[0]
+Wed Feb 28 18:10:08 2024 line 29 ./truck.h - 🚚 truck[5] unloading begin
+Wed Feb 28 18:10:08 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:08 2024 line 65 ./truck.h - 🚚 truck[9] wait_for_unload_ok() end
+Wed Feb 28 18:10:08 2024 line 68 ./truck.h - 🚚 truck[9] drive() begin
+Wed Feb 28 18:10:08 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:08 2024 line 65 ./truck.h - 🚚 truck[0] wait_for_unload_ok() end
+Wed Feb 28 18:10:08 2024 line 68 ./truck.h - 🚚 truck[0] drive() begin
+Wed Feb 28 18:10:08 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:08 2024 line 72 ./truck.h - 🚚 truck[2] drive() end
+Wed Feb 28 18:10:08 2024 line 56 ./truck.h - 🚚 truck[2] enqueue() begin
+Wed Feb 28 18:10:08 2024 line 59 ./truck.h - 🚚 truck[2] enqueue() end
+Wed Feb 28 18:10:08 2024 line 62 ./truck.h - 🚚 truck[2] wait_for_unload_ok() begin
+Wed Feb 28 18:10:08 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:08 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[0] of size 0
+Wed Feb 28 18:10:08 2024 line 33 ./truck.h - 🚚 truck[6] unloading end
+Wed Feb 28 18:10:08 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[6] at storage station 🪣 queue[2]
+Wed Feb 28 18:10:08 2024 line 65 ./truck.h - 🚚 truck[6] wait_for_unload_ok() end
+Wed Feb 28 18:10:08 2024 line 68 ./truck.h - 🚚 truck[6] drive() begin
+Wed Feb 28 18:10:08 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:09 2024 line 72 ./truck.h - 🚚 truck[4] drive() end
+Wed Feb 28 18:10:09 2024 line 56 ./truck.h - 🚚 truck[4] enqueue() begin
+Wed Feb 28 18:10:09 2024 line 59 ./truck.h - 🚚 truck[4] enqueue() end
+Wed Feb 28 18:10:09 2024 line 62 ./truck.h - 🚚 truck[4] wait_for_unload_ok() begin
+Wed Feb 28 18:10:09 2024 line 11 storage_station.cpp - 🛰️ enqueuing truck to storage station
+Wed Feb 28 18:10:09 2024 line 18 storage_station.cpp - 🛰️ enqueuing truck to storage station -> shortest queue[1] of size 0
+Wed Feb 28 18:10:09 2024 line 33 ./truck.h - 🚚 truck[1] unloading end
+Wed Feb 28 18:10:09 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[1] at storage station 🪣 queue[1]
+Wed Feb 28 18:10:09 2024 line 29 ./truck.h - 🚚 truck[4] unloading begin
+Wed Feb 28 18:10:09 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:09 2024 line 33 ./truck.h - 🚚 truck[5] unloading end
+Wed Feb 28 18:10:09 2024 line 65 ./truck.h - 🚚 truck[1] wait_for_unload_ok() end
+Wed Feb 28 18:10:09 2024 line 68 ./truck.h - 🚚 truck[1] drive() begin
+Wed Feb 28 18:10:09 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:09 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[5] at storage station 🪣 queue[0]
+Wed Feb 28 18:10:09 2024 line 65 ./truck.h - 🚚 truck[5] wait_for_unload_ok() end
+Wed Feb 28 18:10:09 2024 line 29 ./truck.h - 🚚 truck[2] unloading begin
+Wed Feb 28 18:10:09 2024 line 68 ./truck.h - 🚚 truck[5] drive() begin
+Wed Feb 28 18:10:09 2024 line 24 time_keeper.cpp - ⏰ getUnloadTime() = 0.0125 minutes = 0.75 seconds
+Wed Feb 28 18:10:09 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:09 2024 line 33 ./truck.h - 🚚 truck[4] unloading end
+Wed Feb 28 18:10:09 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[4] at storage station 🪣 queue[1]
+Wed Feb 28 18:10:09 2024 line 33 ./truck.h - 🚚 truck[2] unloading end
+Wed Feb 28 18:10:09 2024 line 41 storage_station.cpp - 🛰️ unloaded 🚚 truck[2] at storage station 🪣 queue[0]
+Wed Feb 28 18:10:09 2024 line 65 ./truck.h - 🚚 truck[4] wait_for_unload_ok() end
+Wed Feb 28 18:10:09 2024 line 68 ./truck.h - 🚚 truck[4] drive() begin
+Wed Feb 28 18:10:09 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:09 2024 line 65 ./truck.h - 🚚 truck[2] wait_for_unload_ok() end
+Wed Feb 28 18:10:09 2024 line 68 ./truck.h - 🚚 truck[2] drive() begin
+Wed Feb 28 18:10:09 2024 line 17 time_keeper.cpp - ⏰ getDriveTime() = 0.075 minutes = 4.5 seconds
+Wed Feb 28 18:10:11 2024 line 72 ./truck.h - 🚚 truck[3] drive() end
+Wed Feb 28 18:10:11 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[3] work done 🎉
+Wed Feb 28 18:10:12 2024 line 72 ./truck.h - 🚚 truck[8] drive() end
+Wed Feb 28 18:10:12 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[8] work done 🎉
+Wed Feb 28 18:10:12 2024 line 72 ./truck.h - 🚚 truck[7] drive() end
+Wed Feb 28 18:10:12 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[7] work done 🎉
+Wed Feb 28 18:10:12 2024 line 72 ./truck.h - 🚚 truck[9] drive() end
+Wed Feb 28 18:10:12 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[9] work done 🎉
+Wed Feb 28 18:10:12 2024 line 72 ./truck.h - 🚚 truck[0] drive() end
+Wed Feb 28 18:10:12 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[0] work done 🎉
+Wed Feb 28 18:10:12 2024 line 72 ./truck.h - 🚚 truck[6] drive() end
+Wed Feb 28 18:10:12 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[6] work done 🎉
+Wed Feb 28 18:10:13 2024 line 72 ./truck.h - 🚚 truck[5] drive() end
+Wed Feb 28 18:10:13 2024 line 72 ./truck.h - 🚚 truck[1] drive() end
+Wed Feb 28 18:10:13 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[5] work done 🎉
+Wed Feb 28 18:10:13 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[1] work done 🎉
+Wed Feb 28 18:10:14 2024 line 72 ./truck.h - 🚚 truck[4] drive() end
+Wed Feb 28 18:10:14 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[4] work done 🎉
+Wed Feb 28 18:10:14 2024 line 72 ./truck.h - 🚚 truck[2] drive() end
+Wed Feb 28 18:10:14 2024 line 81 main.cpp - 🎮 simulation duration acquired, 🚚 truck[2] work done 🎉
+Wed Feb 28 18:10:14 2024 line 89 main.cpp - 🛰️ storage station metrics for the performance and efficiency of each mining truck 🚚 and unload station queue 🪣
+***************************************************************************************************************************
+
+🚚 truck count: 10
+🪣 queue count: 3
+
+🚚 truck[0] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[1] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[2] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[3] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[4] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[5] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[6] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[7] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[8] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+🚚 truck[9] unloaded 3 loads of Helium-3 at a rate of 0.3 loads per hour
+
+🪣 queue[0] unloaded 14 loads of Helium-3 at a rate of 1.4 loads per hour
+🪣 queue[1] unloaded 10 loads of Helium-3 at a rate of 1 loads per hour
+🪣 queue[2] unloaded 6 loads of Helium-3 at a rate of 0.6 loads per hour
+
+👍 GREAT WORK, TEAM!  CHEERS! 🍺🍻
+***************************************************************************************************************************
+```
