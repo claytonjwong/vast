@@ -6,6 +6,7 @@
 #include "logger.h"
 
 using namespace std::chrono_literals;
+
 class time_keeper {
 public:
     time_keeper(double time_ratio) noexcept;
