@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <random>
 #include <sstream>
 #include <string>
 #include "storage_station.h"
@@ -8,9 +10,13 @@ storage_station::storage_station(const int truck_cnt, const int queue_cnt, const
 }
 
 void storage_station::enqueue(const TruckPtr truck) {
+    std::unique_lock<std::mutex> lock(m);
     logger::log(__LINE__, __FILE__, "🛰️ enqueuing truck to storage station");
     auto [best_size, best_index] = std::make_pair(1234567890, -1); // FIXME? large constant lib + best effort linear scan for minimum queue size (which is always changing)
-    for (auto i{ 0 }; i < _queues.size(); ++i) {
+    std::random_device rd;
+    std::mt19937 gen{ rd() };
+    std::ranges::shuffle(_index, gen);
+    for (auto i: _index) {
         if (best_size > _queues[i]->size()) {
             best_size = _queues[i]->size(), best_index = i;
         }
@@ -26,6 +32,7 @@ void storage_station::init() {
     for (auto i{ 0 }; i < _queues.size(); ++i) {
         std::thread t{ &storage_station::process, this, i };
         t.detach();
+        _index.push_back(i);
     }
 }
 

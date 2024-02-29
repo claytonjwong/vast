@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include <memory>
+#include <mutex>
 #include <queue>
 #include <unordered_map>
 #include <utility>
@@ -31,6 +32,8 @@ public:
 private:
     const int _truck_cnt, _queue_cnt, _simulation_hours;
     std::vector<QueuePtr> _queues;
+    std::mutex m;
+    std::vector<int> _index; // remove minimum index queue bias via randomized index shuffle before each linear scan
     void init();
     void process(int i);
     using Counter = std::unordered_map<int, int>;

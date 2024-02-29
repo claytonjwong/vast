@@ -2252,7 +2252,7 @@ commit c63b44897cb3aa98b32dc0e7578b270c8d380c0e
 
 ## Biased opinions towards the minimum index queues is quite obviously observed during a 72 hour simulation
 
-[ ] TODO: Computer, let's install a stochastic algorithm to see if we can allow randomization to solve this issue for us, ie. randomized shuffle of the queue index i=0..|A| before each linear scan for the minimum cardinality.
+`[x] TODO:` Computer, let's install a stochastic algorithm to see if we can allow randomization to solve this issue for us, ie. randomized shuffle of the queue index i=0..|A| before each linear scan for the minimum cardinality.
 
 ```
 ***************************************************************************************************************************
@@ -2372,6 +2372,37 @@ commit c63b44897cb3aa98b32dc0e7578b270c8d380c0e
 🪣 queue[7] unloaded 13 loads of Helium-3 at a rate of 0.180556 loads per hour
 🪣 queue[8] unloaded 9 loads of Helium-3 at a rate of 0.125 loads per hour
 🪣 queue[9] unloaded 8 loads of Helium-3 at a rate of 0.111111 loads per hour
+
+👍 GREAT WORK, TEAM!  CHEERS! 🍺🍻
+
+***************************************************************************************************************************
+```
+
+### 🎯 Stochastic algorithm allows randomized shuffle of the queue index to resolve biased opinions towards the minimum index queues
+
+#### ✅ Load balance acheived
+
+```
+***************************************************************************************************************************
+
+🎮 simulation hours: 72
+🚚 truck count: 100
+🪣 queue count: 10
+
+...
+...
+...
+
+🪣 queue[0] unloaded 190 loads of Helium-3 at a rate of 2.63889 loads per hour
+🪣 queue[1] unloaded 168 loads of Helium-3 at a rate of 2.33333 loads per hour
+🪣 queue[2] unloaded 186 loads of Helium-3 at a rate of 2.58333 loads per hour
+🪣 queue[3] unloaded 187 loads of Helium-3 at a rate of 2.59722 loads per hour
+🪣 queue[4] unloaded 178 loads of Helium-3 at a rate of 2.47222 loads per hour
+🪣 queue[5] unloaded 168 loads of Helium-3 at a rate of 2.33333 loads per hour
+🪣 queue[6] unloaded 182 loads of Helium-3 at a rate of 2.52778 loads per hour
+🪣 queue[7] unloaded 194 loads of Helium-3 at a rate of 2.69444 loads per hour
+🪣 queue[8] unloaded 193 loads of Helium-3 at a rate of 2.68056 loads per hour
+🪣 queue[9] unloaded 165 loads of Helium-3 at a rate of 2.29167 loads per hour
 
 👍 GREAT WORK, TEAM!  CHEERS! 🍺🍻
 
