@@ -79,7 +79,8 @@ note right of argparse
 end note
 
 note left of main
-  app model
+  application
+  controller
 end note
 
 @enduml
