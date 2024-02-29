@@ -45,7 +45,7 @@ void storage_station::process(int i) {
 std::string storage_station::get_metrics() const {
     std::ostringstream os;
     auto separator = std::string(123, '*');
-    os << "🛰️ metrics for the performance and efficiency of each mining truck 🚚 and unload station queue 🪣" << '\n'
+    os << "🛰️ storage station metrics for the performance and efficiency of each mining truck 🚚 and unload station queue 🪣" << '\n'
        << separator << '\n'
        << '\n'
        << "🚚 truck count: " << _truck_cnt << '\n'
@@ -63,6 +63,7 @@ std::string storage_station::get_metrics() const {
         os << "🪣 queue[" << i << "] unloaded " << loads << " loads of Helium-3 at a rate of " << rate << " loads per hour" << '\n';
     }
     os << '\n'
+       << "👍 GREAT WORK, TEAM!  CHEERS! 🍺🍻" << '\n'
        << separator << '\n';
     return os.str();
 }
