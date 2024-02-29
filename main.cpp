@@ -89,7 +89,6 @@ void run(int argc, const char* argv[]) {
             unload_queue.wait_and_pop(truckPtr);
             station.enqueue(truckPtr);
         }
-        logger::log(__LINE__, __FILE__, "🎮 Error: running detached thread for unload_queue_work should NOT reach this code leg! 🛑");
         assert(false && "🎮 Error: unreachable code!  The unload queue must remain running until all trucks have finished! 🛑");
     };
     joining_thread unload_queue_thread{ unload_queue_work };
