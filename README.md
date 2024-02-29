@@ -1570,7 +1570,7 @@ LOW: Wed Feb 28 09:40:32 2024 - truck - unloading end
 [2]    63069 segmentation fault  ./bazel-bin/main -t=1 -q=1 -r=200 -d=24
 ```
 
-## Segmentation Fault Validation
+## ✅ Segmentation Fault Validation
 
 Ancedotal evidence suggests this is fixed, since the segmentation fault previously occurred 100% of the time after the simulation ended.
 
