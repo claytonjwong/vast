@@ -13,11 +13,12 @@ bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=200 -d=5
 ➜  vast git:(main) ✗ ./bazel-bin/main -h
 Usage: main [options...]
 Options:
-    -t, --trucks           quantity of mining trucks (Required)
-    -q, --queues           quantity of unloading queues (Required)
-    -r, --ratio            time warp ratio (example: -r=2 is 2x speed) (Required)
-    -d, --duration         simulation duration in hours (Required)
+    -t, --trucks           Quantity of mining trucks (Required)
+    -q, --queues           Quantity of unloading queues (Required)
+    -r, --ratio            Time warp ratio (example: -r=2 is 2x speed) (Required)
+    -d, --duration         Simulation duration in hours (Required)
     -h, --help             Shows this page
+    --starwars             May the force be with you
 ```
 
 ## Example: 2-hour simulation time as 1-hour real-world time
@@ -29,11 +30,6 @@ bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=2 -d=2
 ```
 
 ![](images/r2d2.png)
-
-* **Notes:**
-  * these CLI values are a favorite for Star Wars fans 🚀
-  * seriously though, this takes an hour to run! 🐢
-    * 🛑 not recommended for real-world use 👻
 
 # Unit Tests
 ```
