@@ -2210,6 +2210,7 @@ Wed Feb 28 18:10:14 2024 line 81 main.cpp - 🎮 simulation duration acquired, �
 Wed Feb 28 18:10:14 2024 line 89 main.cpp - 🛰️ storage station metrics for the performance and efficiency of each mining truck 🚚 and unload station queue 🪣
 ***************************************************************************************************************************
 
+🎮 simulation hours: 10
 🚚 truck count: 10
 🪣 queue count: 3
 

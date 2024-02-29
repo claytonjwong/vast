@@ -48,6 +48,7 @@ std::string storage_station::get_metrics() const {
     os << "🛰️ storage station metrics for the performance and efficiency of each mining truck 🚚 and unload station queue 🪣" << '\n'
        << separator << '\n'
        << '\n'
+       << "🎮 simulation hours: " << _simulation_hours << '\n'
        << "🚚 truck count: " << _truck_cnt << '\n'
        << "🪣 queue count: " << _queue_cnt << '\n'
        << '\n';
