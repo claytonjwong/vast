@@ -9,7 +9,7 @@ using namespace std::chrono_literals;
 
 class time_keeper {
 public:
-    time_keeper(double time_ratio) noexcept;
+    explicit time_keeper(double time_ratio) noexcept;
     ~time_keeper() noexcept = default;
     time_keeper(const time_keeper&) = delete;
     time_keeper(const time_keeper&&) = delete;
