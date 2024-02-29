@@ -16,7 +16,7 @@ void storage_station::enqueue(const TruckPtr truck) {
         }
     }
     logger::log(__LINE__, __FILE__,
-        "🛰️ enqueuing truck to storage station -> shortest queue[", best_index, "] of size ",
+        "🛰️ enqueuing truck to storage station -> shortest 🪣 queue[", best_index, "] of size ",
         _queues[best_index]->size());
     _queues[best_index]->push(truck);
 }
