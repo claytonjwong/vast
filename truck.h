@@ -31,10 +31,12 @@ private:
     int _id;  // unique identifier for per truck reporting metrics
     threadsafe_queue<std::shared_ptr<Truck>>& _unload_queue;
     time_keeper _time_keeper;
-    mutable std::mutex m;
-    std::condition_variable unload_ok;
-    void drive();
-    void enqueue();
-    void mine();
-    void wait_for_unload_ok();
+    mutable std::mutex _m;
+    std::condition_variable _unload_ok;
+    void _drive();
+    void _drive_to_mine();
+    void _drive_to_station();
+    void _enqueue();
+    void _mine();
+    void _wait_for_unload_ok();
 };

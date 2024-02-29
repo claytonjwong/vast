@@ -5,22 +5,32 @@ Truck::Truck(int i, threadsafe_queue<std::shared_ptr<Truck>>& unload_queue, doub
 }
 
 void Truck::do_work() {
-    mine();                // 1. initially each truck is already at a mining site, so we begin by mining
-    drive();               // 2. drive from mine site to unloading station
-    enqueue();             // 3. storage station queue (emphemeral, meta queue, ie. its a single parent queue into storage station's children queues)
-    wait_for_unload_ok();  // 4. the storage station will eventually dequeue this truck and invoke unload upon it, so wait until that's done
-    drive();               // 5. drive from unloading station to mine site
+    _mine();                // 1. initially each truck is already at a mining site, so we begin by mining
+    _drive_to_station();    // 2. drive from mine site to unloading station
+    _enqueue();             // 3. storage station queue (emphemeral, meta queue, ie. its a single parent queue into storage station's children queues)
+    _wait_for_unload_ok();  // 4. the storage station will eventually dequeue this truck and invoke unload upon it, so wait until that's done
+    _drive_to_mine();       // 5. drive from unloading station to mine site
 }
 
-void Truck::drive() {
-    logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] drive() begin");
+void Truck::_drive_to_mine() {
+    logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] _drive_to_mine() begin");
+    _drive();
+    logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] _drive_to_mine() end");
+}
+
+void Truck::_drive_to_station() {
+    logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] _drive_to_station() begin");
+    _drive();
+    logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] _drive_to_station() end");
+}
+
+void Truck::_drive() {
     _state = State::Driving;
     auto wait = _time_keeper.getDriveTime();
     std::this_thread::sleep_for(wait);
-    logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] drive() end");
 }
 
-void Truck::enqueue() {
+void Truck::_enqueue() {
     logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] enqueue() begin");
     _state = State::Enqueuing;
     _unload_queue.push(shared_from_this());
@@ -35,7 +45,7 @@ Truck::State Truck::getState() const {
     return _state;
 }
 
-void Truck::mine() {
+void Truck::_mine() {
     logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] mine() begin");
     _state = State::Mining;
     auto wait = _time_keeper.getMineTime();
@@ -50,12 +60,12 @@ void Truck::unload() {
     std::this_thread::sleep_for(wait);
     logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] unloading end");
     _state = State::Unloaded;
-    unload_ok.notify_one();
+    _unload_ok.notify_one();
 }
 
-void Truck::wait_for_unload_ok() {
+void Truck::_wait_for_unload_ok() {
     logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] wait_for_unload_ok() begin");
-    std::unique_lock<std::mutex> lock(m);
-    unload_ok.wait(lock, [this]{ return _state == State::Unloaded; });
+    std::unique_lock<std::mutex> lock(_m);
+    _unload_ok.wait(lock, [this]{ return _state == State::Unloaded; });
     logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] wait_for_unload_ok() end");
 }
