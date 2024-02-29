@@ -64,6 +64,7 @@ std::string storage_station::get_metrics() const {
     }
     os << '\n'
        << "👍 GREAT WORK, TEAM!  CHEERS! 🍺🍻" << '\n'
+       << '\n'
        << separator << '\n';
     return os.str();
 }
