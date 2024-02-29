@@ -1,5 +1,6 @@
 @startuml
 
+[*] --> mine
 mine : 1. initially each truck is already at a mining site, so we begin by mining
 drive_to_station : 2. drive from mine site to unloading stationfrom mine site to unloading station
 enqueue : 3. storage station queue (emphemeral, meta queue, ie. its a single parent queue into storage station's children queues)
@@ -10,5 +11,5 @@ mine --> drive_to_station
 drive_to_station --> enqueue
 enqueue --> wait_for_unload_ok
 wait_for_unload_ok --> drive_to_mine
-drive_to_mine --> mine
+drive_to_mine --> mine : if the simulation duration is acquired exit, otherwise loop
 @enduml
