@@ -68,6 +68,13 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "star_wars",
+    hdrs = [
+        "star_wars.h",
+    ],
+)
+
 cc_binary(
     name = "main",
     srcs = [
@@ -77,6 +84,7 @@ cc_binary(
         ":argparse",
         ":joining_thread",
         ":logger",
+        ":star_wars",
         ":storage_station",
         ":threadsafe_queue",
         ":truck",

@@ -7,6 +7,7 @@
 #include "argparse.h"
 #include "joining_thread.h"
 #include "logger.h"
+#include "star_wars.h"
 #include "storage_station.h"
 #include "truck.h"
 
@@ -47,6 +48,22 @@ std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
     assert(0 < TIME_RATIO);
     assert(0 < SIMULATION_HOURS);
     return std::make_tuple(TRUCK_CNT, QUEUE_CNT, TIME_RATIO, SIMULATION_HOURS);
+}
+
+void star_wars(int argc, const char* argv[]) {
+    auto found = false;
+    std::string target = "--starwars";
+    for (auto i{ 0 }; i < argc; ++i)
+        if (target == std::string(argv[i]))
+            found = true;
+    if (!found)
+        return;
+    std::cout << STAR_WARS << std::endl;
+    for (auto i{ 0 }; /* loop forever */ ; i = (i + 1) % STAR_WARS_IMAGES.size()) {
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+        system("clear");
+        std::cout << STAR_WARS_IMAGES[i] << std::endl;
+    }
 }
 
 void run(int argc, const char* argv[]) {
@@ -105,6 +122,7 @@ void run(int argc, const char* argv[]) {
 }
 
 int main(int argc, const char* argv[]) {
+    star_wars(argc, argv);
     run(argc, argv);
     return 0;
 }
