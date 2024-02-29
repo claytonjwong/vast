@@ -2,7 +2,7 @@
 
 using namespace std::chrono_literals;
 
-time_keeper::time_keeper(double time_ratio) noexcept : _time_ratio{ time_ratio } {
+time_keeper::time_keeper(const double time_ratio) noexcept : _time_ratio{ time_ratio } {
 }
 
 std::chrono::duration<double> time_keeper::getMineTime() {

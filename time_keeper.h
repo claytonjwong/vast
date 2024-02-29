@@ -6,7 +6,6 @@
 #include "logger.h"
 
 using namespace std::chrono_literals;
-
 class time_keeper {
 public:
     time_keeper(double time_ratio) noexcept;
@@ -23,7 +22,7 @@ private:
     static constexpr auto MAX_MINE_TIME = 5h;
     static constexpr auto DRIVE_TIME = 30min;
     static constexpr auto UNLOAD_TIME = 5min;
-    double _time_ratio;
+    const double _time_ratio;
     std::default_random_engine _generator;
     std::chrono::hours _getMineTime();
 };
