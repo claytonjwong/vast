@@ -1,6 +1,6 @@
 # Build + Run
 ```
-bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=200 -d=5
+bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=200 -d=5
 ```
 
 # Build Requirements
@@ -10,8 +10,9 @@ bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=200 -d=5
 
 # Help
 ```
-➜  vast git:(main) ✗ ./bazel-bin/main -h
-Usage: main [options...]
+➜  vast git:(main) ✗ ./bazel-bin/vast -h
+Version: 1.0
+Usage: vast [options...]
 Options:
     -t, --trucks           Quantity of mining trucks (Required)
     -q, --queues           Quantity of unloading queues (Required)
@@ -26,7 +27,7 @@ Options:
 The time warp ratio `-r=2` makes the simulation twice as fast as the real-world time.  Thus when the simulation duration is set to 2-hours, ie. `-d=2`, then those 2-hours in the simulation occur over 1-hour in the real-world's time.
 
 ```
-bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=2 -d=2
+bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=2 -d=2
 ```
 
 ![](images/r2d2.png)
@@ -59,7 +60,7 @@ bazel clean --expunge --async
 ![](images/whiteboard.png)
 
 ```
-➜  vast git:(main) bazel build :main && ./bazel-bin/main
+➜  vast git:(main) bazel build :vast && ./bazel-bin/vast
 INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
 INFO: Found 1 target...
 Target //:main up-to-date:
@@ -1097,7 +1098,7 @@ LOW: Tue Feb 27 09:45:24 2024 - truck - drive() begin
 # Add CLI Args w/ Help
 
 ```
-➜  vast git:(main) ✗ bazel build :main && ./bazel-bin/main --help
+➜  vast git:(main) ✗ bazel build :vast && ./bazel-bin/vast --help
 INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
 INFO: Found 1 target...
 Target //:main up-to-date:
@@ -1215,7 +1216,7 @@ Executed 5 out of 5 tests: 5 tests pass.
 # Storage Station: Enqueue to Shortest Queue
 
 ```
-vast git:(main) ✗ bazel build :main && ./bazel-bin/main --trucks=1000 --queues=3
+vast git:(main) ✗ bazel build :vast && ./bazel-bin/vast --trucks=1000 --queues=3
 ```
 
 These logs provide anecdotal evidence that the shortest of the 3 queues is "cherry-picked" by the storage station for enqueue with a bias towards the minimum queue index, ie. the first best of a linear scan of all queue possibilities "breaks ties."
@@ -1266,7 +1267,7 @@ Options:
 We can clearly validate these bug fixes via post-processed log analysis.  When the time warp ratio is set to `30`, the simulation is a slow pace, ie. a maximum `5` hour mining time time-warps to `10` minutes, ie. convert `5` hours to `5 * 60 = 300` minutes and divide by the time warp ratio: `300 / 30 = 10`
 
 ```
-➜  vast git:(main) ✗ bazel build :main && ./bazel-bin/main -t 1 -q 1 -r 30
+➜  vast git:(main) ✗ bazel build :vast && ./bazel-bin/vast -t 1 -q 1 -r 30
 INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
 INFO: Found 1 target...
 Target //:main up-to-date:
@@ -1395,7 +1396,7 @@ Options:
 ## Run the simulation for 24 hours and observe segfault after the simulation is finished
 
 ```
-➜  vast git:(main) ✗ bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=200 -d=24
+➜  vast git:(main) ✗ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=200 -d=24
 INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
 INFO: Found 1 target...
 Target //:main up-to-date:
@@ -1580,7 +1581,7 @@ Ancedotal evidence suggests this is fixed, since the segmentation fault previous
 🎯 What matters is how much Helium-3 each truck and storage station queue unloads
 
 ```
-➜  vast git:(main) bazel build :main && ./bazel-bin/main -t=10 -q=3 -r=400 -d=10
+➜  vast git:(main) bazel build :vast && ./bazel-bin/vast -t=10 -q=3 -r=400 -d=10
 INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
 INFO: Found 1 target...
 Target //:main up-to-date:

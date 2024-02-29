@@ -79,8 +79,15 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "version",
+    hdrs = [
+        "version.h",
+    ],
+)
+
 cc_binary(
-    name = "main",
+    name = "vast",
     srcs = [
         "main.cpp",
     ],
@@ -92,6 +99,7 @@ cc_binary(
         ":storage_station",
         ":threadsafe_queue",
         ":truck",
+        ":version",
     ],
 )
 
