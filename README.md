@@ -31,9 +31,13 @@ bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=2 -d=2
 
 ![](images/r2d2.png)
 
-# UML Class Diagram
+# Class Diagram
 
 ![](images/Class.png)
+
+# Truck State Diagram
+
+![](images/State.png)
 
 # Unit Tests
 ```
