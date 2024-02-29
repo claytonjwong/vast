@@ -31,6 +31,10 @@ bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=2 -d=2
 
 ![](images/r2d2.png)
 
+# UML Class Diagram
+
+![](images/Class.png)
+
 # Unit Tests
 ```
 bazel test --test_output=all //:all
@@ -1227,10 +1231,6 @@ LOW: Tue Feb 27 15:11:40 2024 - time_keeper - getUnloadTime() = 0
 LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station
 LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage station -> shortest queue[0] of size 1
 ```
-
-# UML Class Diagram
-
-![](images/Class.png)
 
 # 🤟 Third Try (Day 3) - Wednesday 2024-02-28
 
