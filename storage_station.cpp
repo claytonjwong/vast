@@ -1,33 +1,23 @@
 #include <sstream>
 #include <string>
-#include <vector>
 #include "storage_station.h"
 
 storage_station::storage_station(const int truck_cnt, const int queue_cnt, const int simulation_hours) noexcept
-        : _truck_cnt{ truck_cnt }, _queue_cnt{ queue_cnt }, _simulation_hours{ simulation_hours },
-          _generator{ std::random_device{}() } {
+        : _truck_cnt{ truck_cnt }, _queue_cnt{ queue_cnt }, _simulation_hours{ simulation_hours } {
     init();
 }
 
 void storage_station::enqueue(const TruckPtr truck) {
-    std::lock_guard<std::mutex> lock(m);
     logger::log(__LINE__, __FILE__, "🛰️ enqueuing truck to storage station");
-    auto best_size = _queues[0]->size();
+    auto [best_size, best_index] = std::make_pair(1234567890, -1); // FIXME? large constant lib + best effort linear scan for minimum queue size (which is always changing)
     for (auto i{ 0 }; i < _queues.size(); ++i) {
-        best_size = std::min(best_size, _queues[i]->size());
-    }
-    std::vector<int> index;
-    for (auto i{ 0 }; i < _queues.size(); ++i) {
-        if (best_size == _queues[i]->size()) {
-            index.push_back(i);
+        if (best_size > _queues[i]->size()) {
+            best_size = _queues[i]->size(), best_index = i;
         }
     }
-    std::uniform_int_distribution<int> distribution(0, index.size());
-    auto random = distribution(_generator);
-    auto i = index[random];
     logger::log(__LINE__, __FILE__, "🛰️ enqueuing truck to storage station ",
-        "-> shortest 🪣 queue[", i, "] of size ", _queues[i]->size());
-    _queues[i]->push(truck);
+        "-> shortest 🪣 queue[", best_index, "] of size ", _queues[best_index]->size());
+    _queues[best_index]->push(truck);
 }
 
 void storage_station::init() {
