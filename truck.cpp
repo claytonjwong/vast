@@ -9,11 +9,11 @@ int Truck::get_id() const {
 }
 
 void Truck::do_work() {
-    mine();     // initially each truck is already at a mining site
-    drive();    // drive from mine site to unloading station
-    enqueue();  // storage station queue
-    wait_for_unload_ok();  // the storage station will eventually dequeue this truck and invoke unload, so wait until that's done
-    drive();   // drive from unloading station to mine site
+    mine();                // 1. initially each truck is already at a mining site, so we begin by mining
+    drive();               // 2. drive from mine site to unloading station
+    enqueue();             // 3. storage station queue (emphemeral, meta queue, ie. its a single parent queue into storage station's children queues)
+    wait_for_unload_ok();  // 4. the storage station will eventually dequeue this truck and invoke unload upon it, so wait until that's done
+    drive();               // 5. drive from unloading station to mine site
 }
 
 void Truck::unload() {
