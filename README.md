@@ -23,7 +23,7 @@ The time warp ratio `-r=2` makes the simulation twice as fast as the real-world 
 bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=2 -d=2
 ```
 
-![](r2d2.png)
+![](images/r2d2.png)
 
 * **Notes:**
   * these CLI values are a favorite for Star Wars fans 🚀
@@ -47,7 +47,7 @@ https://github.com/jamolnng/argparse
 # First Try (Day 1) - Monday 2024-02-26
 
 ## Whiteboard
-![](whiteboard.png)
+![](images/whiteboard.png)
 
 ```
 ➜  vast git:(main) bazel build :main && ./bazel-bin/main
@@ -75,7 +75,7 @@ libc++abi: terminating due to uncaught exception of type std::__1::bad_weak_ptr:
 
 # Second Try (Day 2) - Tuesday 2024-02-27
 
-![](todo_list.png)
+![](images/todo_list.png)
 
 * Bug fix for `bad_weak_ptr`: in the `truck_work` thread function, the `Truck` was constructed on the stack rather than a `shared_ptr` on the heap, thus the reference count reached `0` when `shared_from_this()` was invoked.
   * https://github.com/claytonjwong/vast/commit/f3f3271240e6bbcc604046f9f2bb968e6a3416ca#diff-608d8de3fba954c50110b6d7386988f27295de845e9d7174e40095ba5efcf1bbR38
@@ -1229,7 +1229,7 @@ LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage sta
 
 # UML Class Diagram
 
-![](Class.png)
+![](images/Class.png)
 
 # Third Try (Day 3) - Wednesday 2024-02-28
 
@@ -1568,7 +1568,7 @@ LOW: Wed Feb 28 09:40:32 2024 - truck - unloading end
 
 Ancedotal evidence suggests this is fixed, since the segmentation fault previously occurred 100% of the time after the simulation ended.
 
-![](segfault_validation.png)
+![](images/segfault_validation.png)
 
 ## 🛰️ Storage Station Performance Metrics
 
