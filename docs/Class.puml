@@ -1,6 +1,8 @@
 @startuml
 
-class joining_thread {
+class argparse as "🔡=🔢 argparse"
+
+class joining_thread as "🧶 joining_thread" {
     -thread t
     +swap()
     +get_id()
@@ -10,24 +12,31 @@ class joining_thread {
     +as_thread()
 }
 
-class logger {
-    +log_level
+class logger as "🪵 logger" {
     +log()
-    +to_string()
     +get_time()
 }
 
-class main
+class main as "🎮 main"
 
-class storage_station {
+class storage_station as "🛰️ storage_station" {
+    -int _truck_cnt
     -int _queue_count
+    -int _simulation_hours
     -vector _queues
-    +void enqueue()
+    -mutex m
+    -Counter _truck_loads
+    -Counter _queue_loads
     -void init()
     -void process(int i)
+    +void enqueue()
+    +string get_metrics()
+    +storage_station(int, int, int)
 }
 
-class threadsafe_queue<T> {
+class unload_queue as "🥡 unload_queue"
+
+class threadsafe_queue as "🪣 threadsafe_queue" {
     -queue<T> q
     -mutex m
     -condition_variable ok
@@ -37,42 +46,49 @@ class threadsafe_queue<T> {
     +bool empty()
 }
 
-class time_keeper {
+class time_keeper as "⏰ time_keeper" {
     -duration MIN_MINE_TIME
     -duration MAX_MINE_TIME
     -duration DRIVE_TIME
     -duration UNLOAD_TIME
     -double _time_ratio
     -default_random_engine _generator
-    -duration _getMineTime()
+    -duration _getMineTime() 🎲
     +duration getMineTime()
     +getDriveTime()
     +getUnloadTime()
 }
 
-class truck {
+class truck as "🚚 Truck" {
     -State state
-    void mine()
-    void drive()
-    void enqueue()
-    void unload()
+    -void mine()
+    -void drive()
+    -void enqueue()
+    -void mine()
+    -wait_for_unload_ok()
+    +void do_work()
+    +int get_id()
+    +State getState()
+    +void unload()
 }
 
-joining_thread -- threadsafe_queue
-joining_thread -- truck
+joining_thread "1" -- "1" truck
 
-logger -- main
-logger -- storage_station
-logger -- time_keeper
-logger -- truck
+logger "1" -- "1" main
+logger "1" -- "1" storage_station
+logger "1" -- "1..*" time_keeper
+logger "1" -- "1..*" truck
 
-main *- truck
-main *- storage_station
+main "1" *- "1..*" truck
+main "1" *- "1" storage_station
 
-storage_station o- threadsafe_queue
+storage_station "1" o- "1..*" threadsafe_queue
 
-truck o- threadsafe_queue
-truck *- time_keeper
+unload_queue "1" -- "1" storage_station
+unload_queue "1" -- "1..*" truck
+
+truck "1..*" o- "1" threadsafe_queue
+truck "1" *- "1" time_keeper
 
 note right of argparse
   3rd party library for CLI args
@@ -81,6 +97,29 @@ end note
 note left of main
   application
   controller
+end note
+
+note right of unload_queue
+    Detached thread for unload_queue_work (server)
+    1. loaded trucks push themselves onto this queue
+    2. this queue leads to the storage station's queue(s)
+
+    The purpose is to decouple the Truck and Storage Station,
+    ie. the Truck and Storage Station cannot be mutually dependent
+    upon each other.
+
+    This is the single parent queue before all possible storage
+    station children queues
+
+    🚚 ... 🚚 ... 🚚 ... 🚚 ... 🚚 ..., ie. 🥡 and then? 🥡 and then? 🥡 and then?
+end note
+
+note right of time_keeper
+
+    Enables time warping 🚀 ⏳⌛️ 🤩
+    between:
+        1. the simulation world 🗺️
+        2. the real world 🌎
 end note
 
 @enduml
