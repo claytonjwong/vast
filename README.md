@@ -1213,7 +1213,7 @@ INFO: Build completed successfully, 61 total actions
 Executed 5 out of 5 tests: 5 tests pass.
 ```
 
-# Storage Station: Enqueue to Shortest Queue
+# 🛰️ Storage Station: Enqueue to Shortest Queue
 
 ```
 vast git:(main) ✗ bazel build :vast && ./bazel-bin/vast --trucks=1000 --queues=3
