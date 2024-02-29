@@ -1,13 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 cc_library(
-    name = "logger",
-    hdrs = [
-        "logger.h",
-    ],
-)
-
-cc_library(
     name = "argparse",
     hdrs = [
         "argparse.h",
@@ -15,9 +8,47 @@ cc_library(
 )
 
 cc_library(
+    name = "common",
+    hdrs = [
+        "common.h",
+    ],
+)
+
+cc_library(
     name = "joining_thread",
     hdrs = [
         "joining_thread.h",
+    ],
+)
+
+cc_library(
+    name = "logger",
+    hdrs = [
+        "logger.h",
+    ],
+)
+
+cc_library(
+    name = "storage_station",
+    hdrs = [
+        "storage_station.h",
+    ],
+    srcs = [
+        "storage_station.cpp",
+    ],
+    deps = [
+        ":common",
+        ":joining_thread",
+        ":logger",
+        ":threadsafe_queue",
+        ":truck",
+    ],
+)
+
+cc_library(
+    name = "star_wars",
+    hdrs = [
+        "star_wars.h",
     ],
 )
 
@@ -50,32 +81,10 @@ cc_library(
         "truck.cpp",
     ],
     deps = [
+        ":common",
         ":logger",
         ":time_keeper",
         ":threadsafe_queue",
-    ],
-)
-
-cc_library(
-    name = "storage_station",
-    hdrs = [
-        "storage_station.h",
-    ],
-    srcs = [
-        "storage_station.cpp",
-    ],
-    deps = [
-        ":joining_thread",
-        ":logger",
-        ":threadsafe_queue",
-        ":truck",
-    ],
-)
-
-cc_library(
-    name = "star_wars",
-    hdrs = [
-        "star_wars.h",
     ],
 )
 

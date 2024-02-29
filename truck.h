@@ -2,6 +2,7 @@
 
 #include <condition_variable>
 #include <thread>
+#include "common.h"
 #include "logger.h"
 #include "time_keeper.h"
 #include "threadsafe_queue.h"
@@ -16,7 +17,7 @@ public:
         Unloaded,
         Mining,
     };
-    Truck(int i, threadsafe_queue<std::shared_ptr<Truck>>& unload_queue, double time_ratio) noexcept;
+    Truck(int i, Queue& unload_queue, double time_ratio) noexcept;
     ~Truck() noexcept = default;
     Truck(const Truck&) = delete;
     Truck(const Truck&&) = delete;
@@ -29,7 +30,7 @@ public:
 private:
     State  _state;
     int _id;  // unique identifier for per truck reporting metrics
-    threadsafe_queue<std::shared_ptr<Truck>>& _unload_queue;
+    Queue& _unload_queue;
     time_keeper _time_keeper;
     mutable std::mutex _m;
     std::condition_variable _unload_ok;

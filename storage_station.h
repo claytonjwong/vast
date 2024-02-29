@@ -8,15 +8,11 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include "common.h"
 #include "joining_thread.h"
 #include "logger.h"
 #include "threadsafe_queue.h"
 #include "truck.h"
-
-// TODO: move to common definitions header?
-using TruckPtr = std::shared_ptr<Truck>;
-using Queue = threadsafe_queue<TruckPtr>;
-using QueuePtr = std::shared_ptr<Queue>;
 
 class storage_station {
 public:

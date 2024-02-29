@@ -5,6 +5,7 @@
 #include <thread>
 #include <vector>
 #include "argparse.h"
+#include "common.h"
 #include "joining_thread.h"
 #include "logger.h"
 #include "star_wars.h"
@@ -83,7 +84,7 @@ void run(int argc, const char* argv[]) {
     // servers
     //
     storage_station station(TRUCK_CNT, QUEUE_CNT, SIMULATION_HOURS);
-    threadsafe_queue<std::shared_ptr<Truck>> unload_queue;  // Trucks push themselves onto this emphemeral queue to the storage station, and the unload_queue thread acts as a server Mediator/Controller between the Truck and Storage Station
+    Queue unload_queue;  // Trucks push themselves onto this emphemeral queue to the storage station, and the unload_queue thread acts as a server Mediator/Controller between the Truck and Storage Station
     auto unload_queue_work = [&] {
         logger::log(__LINE__, __FILE__, "🥡 running detached thread for unload_queue_work 🚚 ... 🚚 ... 🚚 ... 🚚 ... 🚚, ie. 🥡 and then? 🥡 and then? 🥡 and then?");
         for (;;) {
