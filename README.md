@@ -44,7 +44,7 @@ bazel clean --expunge --async
 
 https://github.com/jamolnng/argparse
 
-# First Try (Day 1) - Monday 2024-02-26
+# 👍 First Try (Day 1) - Monday 2024-02-26
 
 ## Whiteboard
 ![](images/whiteboard.png)
@@ -73,7 +73,7 @@ libc++abi: terminating due to uncaught exception of type std::__1::bad_weak_ptr:
 [1]    51564 abort      ./bazel-bin/main
 ```
 
-# Second Try (Day 2) - Tuesday 2024-02-27
+# 🤘 Second Try (Day 2) - Tuesday 2024-02-27
 
 ![](images/todo_list.png)
 
@@ -1231,7 +1231,7 @@ LOW: Tue Feb 27 15:11:40 2024 - storage_station - enqueuing truck to storage sta
 
 ![](images/Class.png)
 
-# Third Try (Day 3) - Wednesday 2024-02-28
+# 🤟 Third Try (Day 3) - Wednesday 2024-02-28
 
 * Bug fixes for wait durations!  `std::chrono::duration<Rep,Period>`
   * The duration casts `Rep = Long`, so the fractional values are lost! (that's why we see `0` printed in the [Second Try](https://github.com/claytonjwong/vast?tab=readme-ov-file#second-try-day-2---tuesday-2024-02-27))
@@ -2228,6 +2228,150 @@ Wed Feb 28 18:46:14 2024 line 89 main.cpp - 🛰️ storage station metrics for 
 🪣 queue[0] unloaded 13 loads of Helium-3 at a rate of 1.3 loads per hour
 🪣 queue[1] unloaded 11 loads of Helium-3 at a rate of 1.1 loads per hour
 🪣 queue[2] unloaded 6 loads of Helium-3 at a rate of 0.6 loads per hour
+
+👍 GREAT WORK, TEAM!  CHEERS! 🍺🍻
+
+***************************************************************************************************************************
+```
+
+# 🤘🤘 Forth Try (Day 4) - Thursday 2024-02-29
+
+![](images/todo_list_updated.jpg)
+
+💥 segfault occurs at [commit c63b44897cb3aa98b32dc0e7578b270c8d380c0e](https://github.com/claytonjwong/vast/commit/c63b44897cb3aa98b32dc0e7578b270c8d380c0e)
+  * Good reminder to `KISS == KEEP IT SUPER SIMPLE!` 👍
+```
+commit df6df8fd44e767780b23a0f0b90c4604b33f38e8 (HEAD -> main, origin/main, origin/HEAD)
+Author: claytonjwong <claytonjwong@gmail.com>
+Date:   Thu Feb 29 08:02:17 2024 -0700
+
+    🚫 REVERT LAST CODE CHANGE - it randomly causes segfaults and that's because of a timing issue, ie. each queue is associated with a thread which is continually attempting to unload (ie. pop from the queue) while at the same time, we are performing a linear scan of all possible queues to find the minimum cardinality queue (ie. best) to place each next truck into from the incoming empheral truck unload queue, and so the minimum index queue bias still exists; during a linear scan from i=0..|A|, minimum index "breaks ties"
+
+commit c63b44897cb3aa98b32dc0e7578b270c8d380c0e
+```
+
+## Biased opinions towards the minimum index queues is quite obviously observed during a 72 hour simulation
+
+[ ] TODO: Computer, let's install a stochastic algorithm to see if we can allow randomization to solve this issue for us, ie. randomized shuffle of the queue index i=0..|A| before each linear scan for the minimum cardinality.
+
+```
+***************************************************************************************************************************
+
+🎮 simulation hours: 72
+🚚 truck count: 100
+🪣 queue count: 10
+
+🚚 truck[0] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[1] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[2] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[3] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[4] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[5] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[6] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[7] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[8] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[9] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[10] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[11] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[12] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[13] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[14] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[15] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[16] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[17] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[18] unloaded 22 loads of Helium-3 at a rate of 0.305556 loads per hour
+🚚 truck[19] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[20] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[21] unloaded 21 loads of Helium-3 at a rate of 0.291667 loads per hour
+🚚 truck[22] unloaded 21 loads of Helium-3 at a rate of 0.291667 loads per hour
+🚚 truck[23] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[24] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[25] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[26] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[27] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[28] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[29] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[30] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[31] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[32] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[33] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[34] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[35] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[36] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[37] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[38] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[39] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[40] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[41] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[42] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[43] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[44] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[45] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[46] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[47] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[48] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[49] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[50] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[51] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[52] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[53] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[54] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[55] unloaded 21 loads of Helium-3 at a rate of 0.291667 loads per hour
+🚚 truck[56] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[57] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[58] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[59] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[60] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[61] unloaded 21 loads of Helium-3 at a rate of 0.291667 loads per hour
+🚚 truck[62] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[63] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[64] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[65] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[66] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[67] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[68] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[69] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[70] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[71] unloaded 15 loads of Helium-3 at a rate of 0.208333 loads per hour
+🚚 truck[72] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[73] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[74] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[75] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[76] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[77] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[78] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[79] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[80] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[81] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[82] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[83] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[84] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[85] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[86] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[87] unloaded 21 loads of Helium-3 at a rate of 0.291667 loads per hour
+🚚 truck[88] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[89] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[90] unloaded 21 loads of Helium-3 at a rate of 0.291667 loads per hour
+🚚 truck[91] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[92] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[93] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[94] unloaded 18 loads of Helium-3 at a rate of 0.25 loads per hour
+🚚 truck[95] unloaded 16 loads of Helium-3 at a rate of 0.222222 loads per hour
+🚚 truck[96] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+🚚 truck[97] unloaded 20 loads of Helium-3 at a rate of 0.277778 loads per hour
+🚚 truck[98] unloaded 17 loads of Helium-3 at a rate of 0.236111 loads per hour
+🚚 truck[99] unloaded 19 loads of Helium-3 at a rate of 0.263889 loads per hour
+
+🪣 queue[0] unloaded 704 loads of Helium-3 at a rate of 9.77778 loads per hour
+🪣 queue[1] unloaded 510 loads of Helium-3 at a rate of 7.08333 loads per hour
+🪣 queue[2] unloaded 324 loads of Helium-3 at a rate of 4.5 loads per hour
+🪣 queue[3] unloaded 151 loads of Helium-3 at a rate of 2.09722 loads per hour
+🪣 queue[4] unloaded 66 loads of Helium-3 at a rate of 0.916667 loads per hour
+🪣 queue[5] unloaded 33 loads of Helium-3 at a rate of 0.458333 loads per hour
+🪣 queue[6] unloaded 15 loads of Helium-3 at a rate of 0.208333 loads per hour
+🪣 queue[7] unloaded 13 loads of Helium-3 at a rate of 0.180556 loads per hour
+🪣 queue[8] unloaded 9 loads of Helium-3 at a rate of 0.125 loads per hour
+🪣 queue[9] unloaded 8 loads of Helium-3 at a rate of 0.111111 loads per hour
 
 👍 GREAT WORK, TEAM!  CHEERS! 🍺🍻
 
