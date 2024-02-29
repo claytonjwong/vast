@@ -15,19 +15,19 @@ std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
     argparse::ArgumentParser parser("main", "argument parser");
     parser.add_argument()
         .names({"-t", "--trucks"})
-        .description("quantity of mining trucks")
+        .description("Quantity of mining trucks")
         .required(true);
     parser.add_argument()
         .names({"-q", "--queues"})
-        .description("quantity of unloading queues")
+        .description("Quantity of unloading queues")
         .required(true);
     parser.add_argument()
         .names({"-r", "--ratio"})
-        .description("time warp ratio (example: -r=2 is 2x speed)")
+        .description("Time warp ratio (example: -r=2 is 2x speed)")
         .required(true);
     parser.add_argument()
         .names({"-d", "--duration"})
-        .description("simulation duration in hours")
+        .description("Simulation duration in hours")
         .required(true);
     parser.enable_help();
     auto error = parser.parse(argc, argv);
@@ -37,6 +37,7 @@ std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
     }
     if (parser.exists("help")) {
         parser.print_help();
+        std::cout << "    --starwars             May the force be with you" << std::endl;
         exit(0);
     }
     const auto TRUCK_CNT = parser.get<int>("trucks");
