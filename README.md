@@ -2252,7 +2252,7 @@ commit c63b44897cb3aa98b32dc0e7578b270c8d380c0e
 
 ## Biased opinions towards the minimum index queues is quite obviously observed during a 72 hour simulation
 
-`[x] TODO:` Computer, let's install a stochastic algorithm to see if we can allow randomization to solve this issue for us, ie. randomized shuffle of the queue index i=0..|A| before each linear scan for the minimum cardinality.
+`[x] TODO:` Computer, let's install a stochastic algorithm to see if we can allow randomization to solve this issue for us, ie. randomized shuffle of the queue index `i=0..|A|` before each linear scan for the minimum cardinality.
 
 ```
 ***************************************************************************************************************************
