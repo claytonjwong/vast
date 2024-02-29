@@ -2,7 +2,8 @@
 
 using namespace std::chrono_literals;
 
-time_keeper::time_keeper(const double time_ratio) noexcept : _time_ratio{ time_ratio } {
+time_keeper::time_keeper(const double time_ratio) noexcept
+        : _time_ratio{ time_ratio }, _generator{ std::random_device{}() } {
 }
 
 std::chrono::duration<double> time_keeper::getMineTime() {
@@ -27,7 +28,6 @@ std::chrono::duration<double> time_keeper::getUnloadTime() const {
 }
 
 std::chrono::hours time_keeper::_getMineTime() {
-    // TODO: seed this random distribution generator so each truck's random time is unique
     std::uniform_int_distribution<int> distribution(MIN_MINE_TIME.count(), MAX_MINE_TIME.count());
     auto random = distribution(_generator);
     std::ostringstream os;
