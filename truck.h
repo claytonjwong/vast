@@ -8,7 +8,7 @@
 class Truck : public std::enable_shared_from_this<Truck> {
 public:
     Truck(int i, threadsafe_queue<std::shared_ptr<Truck>>& unload_queue, double time_ratio) noexcept
-            : _id{ i }, _unload_queue{ unload_queue }, _time{ time_ratio } {
+            : _id{ i }, _unload_queue{ unload_queue }, _time_keeper{ time_ratio } {
     }
     ~Truck() noexcept = default;
     Truck(const Truck&) = delete;
@@ -28,7 +28,7 @@ public:
     void unload() {
         logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] unloading begin");
         _state = State::Unloading;
-        auto wait = _time.getUnloadTime();
+        auto wait = _time_keeper.getUnloadTime();
         std::this_thread::sleep_for(wait);
         logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] unloading end");
         _state = State::Unloaded;
@@ -49,7 +49,7 @@ public:
 private:
     int _id;  // unique identifier for per truck reporting metrics
     threadsafe_queue<std::shared_ptr<Truck>>& _unload_queue;
-    time_keeper _time;
+    time_keeper _time_keeper;
     mutable std::mutex m;
     std::condition_variable unload_ok;
     void enqueue() {
@@ -67,7 +67,7 @@ private:
     void drive() {
         logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] drive() begin");
         _state = State::Driving;
-        auto wait = _time.getDriveTime();
+        auto wait = _time_keeper.getDriveTime();
         std::this_thread::sleep_for(wait);
         logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] drive() end");
         // TODO: invoke logging module for performance metrics (how long each truck is in each state)
@@ -76,7 +76,7 @@ private:
     void mine() {
         logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] mine() begin");
         _state = State::Mining;
-        auto wait = _time.getMineTime();
+        auto wait = _time_keeper.getMineTime();
         std::this_thread::sleep_for(wait);
         logger::log(__LINE__, __FILE__, "🚚 truck[", get_id(), "] mine() end");
         // TODO: invoke logging module for performance metrics (how long each truck is in each state)
