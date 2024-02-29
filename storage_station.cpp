@@ -46,6 +46,7 @@ void storage_station::process(int i) {
         ++_queue_loads[i];
         logger::log(__LINE__, __FILE__, "🛰️ unloaded 🚚 truck[", j, "] at storage station 🪣 queue[", i, "]");
     }
+    assert(false && "🛰️ Error: unreachable code!  The storage_station queue process must remain running until all trucks have finished! 🛑");
 }
 
 std::string storage_station::get_metrics() const {
