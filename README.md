@@ -3,6 +3,11 @@
 bazel build :main && ./bazel-bin/main -t=1 -q=1 -r=200 -d=5
 ```
 
+# Build Requirements
+
+* C++20 toolchain
+* https://bazel.build/
+
 # Help
 ```
 ➜  vast git:(main) ✗ ./bazel-bin/main -h
@@ -42,7 +47,7 @@ bazel clean --expunge --async
 
 # 3rd Party Dependencies
 
-https://github.com/jamolnng/argparse
+* https://github.com/jamolnng/argparse
 
 # 👍 First Try (Day 1) - Monday 2024-02-26
 
