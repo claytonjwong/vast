@@ -63,7 +63,7 @@ void run(int argc, const char* argv[]) {
     //
     // servers
     //
-    storage_station station(TRUCK_CNT, M, SIMULATION_HOURS);
+    storage_station station(TRUCK_CNT, QUEUE_CNT, SIMULATION_HOURS);
     threadsafe_queue<std::shared_ptr<Truck>> unload_queue;  // Trucks push themselves onto this emphemeral queue to the storage station
     auto unload_queue_work = [&] {
         logger::log(__LINE__, __FILE__, "🗑️ running detached thread for unload_queue_work 🔨");
