@@ -1393,7 +1393,7 @@ Options:
     -h, --help             Shows this page
 ```
 
-## Run the simulation for 24 hours and observe segfault after the simulation is finished
+## 💥 Run the simulation for 24 hours and observe segfault after the simulation is finished
 
 ```
 ➜  vast git:(main) ✗ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=200 -d=24
