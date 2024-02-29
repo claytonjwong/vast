@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <chrono>
 #include <memory>
+#include <mutex>
 #include <queue>
+#include <random>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -30,6 +32,8 @@ public:
     std::string get_metrics() const;
 private:
     const int _truck_cnt, _queue_cnt, _simulation_hours;
+    std::default_random_engine _generator;
+    std::mutex m;
     std::vector<QueuePtr> _queues;
     void init();
     void process(int i);
