@@ -78,7 +78,7 @@ int main(int argc, const char* argv[]) {
         while (delta(start) < simulation_duration) {
             truckPtr->do_work();
         }
-        logger::log(__LINE__, __FILE__, "🚚 truck[", i, "] work done 🎉 cheers! 🍺🍻");
+        logger::log(__LINE__, __FILE__, "🎮 simulation duration acquired, 🚚 truck[", i, "] work done 🎉");
     };
     joining_thread unload_queue_thread{ unload_queue_work };
     unload_queue_thread.detach();
