@@ -10,8 +10,10 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=200 -d=5
 
 # Bazel Help
 ```
-➜  vast git:(main) ✗ ./bazel-bin/vast -h
-🛰️  V A S T  H E L I U M - 3  M O O N  M I N E  🌘 ⛏️
+➜  vast git:(main) ✗ bazel build :vast && ./bazel-bin/vast -h
+
+
+                 🛰️  V A S T  H E L I U M - 3  M O O N  M I N E  🌘 ⛏️
 Version: 1.0
 Usage: vast [options...]
 Options:
@@ -76,7 +78,9 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=2 -d=2
 # CMake Help
 ```
 ➜  vast git:(main) ✗ ./cmake-bin/vast -h
-🛰️  V A S T  H E L I U M - 3  M O O N  M I N E  🌘 ⛏️
+
+
+                 🛰️  V A S T  H E L I U M - 3  M O O N  M I N E  🌘 ⛏️
 Version: 1.0
 Usage: vast [options...]
 Options:
