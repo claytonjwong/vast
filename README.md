@@ -2444,7 +2444,7 @@ commit c63b44897cb3aa98b32dc0e7578b270c8d380c0e
 ***************************************************************************************************************************
 ```
 
-### 🎲 Stochastic algorithm allows randomized shuffle of the queue index to resolve biased opinions towards the minimum index queues
+### 🎲 Stochastic algorithm allows randomized shuffle of the queue index to resolve the minimum index queue bias
 
 #### ✅ Load balance acheived
 
