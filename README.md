@@ -37,7 +37,6 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=2 -d=2
 
 ```
 ➜  vast git:(main) ✗ cmake . && cmake --build . && ./cmake-bin/vast -t=1 -q=1 -r=200 -d=5
-➜  vast git:(main) ✗ cmake . && cmake --build .
 -- The C compiler identification is AppleClang 14.0.3.14030022
 -- The CXX compiler identification is AppleClang 14.0.3.14030022
 -- Detecting C compiler ABI info
