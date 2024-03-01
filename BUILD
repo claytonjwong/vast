@@ -29,6 +29,13 @@ cc_library(
 )
 
 cc_library(
+    name = "star_wars",
+    hdrs = [
+        "star_wars.h",
+    ],
+)
+
+cc_library(
     name = "storage_station",
     hdrs = [
         "storage_station.h",
@@ -42,13 +49,6 @@ cc_library(
         ":logger",
         ":threadsafe_queue",
         ":truck",
-    ],
-)
-
-cc_library(
-    name = "star_wars",
-    hdrs = [
-        "star_wars.h",
     ],
 )
 
