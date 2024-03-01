@@ -11,6 +11,7 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=200 -d=5
 # Bazel Help
 ```
 ➜  vast git:(main) ✗ ./bazel-bin/vast -h
+🛰️  V A S T  H E L I U M - 3  M O O N  M I N E  🌘 ⛏️
 Version: 1.0
 Usage: vast [options...]
 Options:
@@ -36,6 +37,19 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=2 -d=2
 
 ```
 ➜  vast git:(main) ✗ cmake . && cmake --build . && ./cmake-bin/vast -t=1 -q=1 -r=200 -d=5
+➜  vast git:(main) ✗ cmake . && cmake --build .
+-- The C compiler identification is AppleClang 14.0.3.14030022
+-- The CXX compiler identification is AppleClang 14.0.3.14030022
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++
 -- Configuring done
@@ -63,8 +77,9 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=2 -d=2
 # CMake Help
 ```
 ➜  vast git:(main) ✗ ./cmake-bin/vast -h
+🛰️  V A S T  H E L I U M - 3  M O O N  M I N E  🌘 ⛏️
 Version: 1.0
-Usage: main [options...]
+Usage: vast [options...]
 Options:
     -t, --trucks           Quantity of mining trucks (Required)
     -q, --queues           Quantity of unloading queues (Required)

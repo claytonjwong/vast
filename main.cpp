@@ -14,7 +14,7 @@
 #include "version.h"
 
 std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
-    argparse::ArgumentParser parser("main", "argument parser");
+    argparse::ArgumentParser parser("vast", "argument parser");
     parser.add_argument()
         .names({"-t", "--trucks"})
         .description("Quantity of mining trucks")
@@ -38,6 +38,7 @@ std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
         exit(1);
     }
     if (parser.exists("help")) {
+        std::cout << "🛰️  V A S T  H E L I U M - 3  M O O N  M I N E  🌘 ⛏️" << std::endl;
         std::cout << "Version: " << vast_VERSION_MAJOR << "." << vast_VERSION_MINOR << std::endl;
         parser.print_help();
         std::cout << "    --starwars             May the force be with you" << std::endl;
