@@ -17,6 +17,7 @@ public:
         Unloaded,
         Mining,
     };
+    Truck() = delete;
     Truck(int i, Queue& unload_queue, double time_ratio) noexcept;
     ~Truck() noexcept = default;
     Truck(const Truck&) = delete;
