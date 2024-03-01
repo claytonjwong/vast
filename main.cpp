@@ -38,7 +38,7 @@ std::tuple<int, int, int, int> getArgs(int argc, const char* argv[]) {
         exit(1);
     }
     if (parser.exists("help")) {
-        std::cout << "Version: " << Vast_VERSION_MAJOR << "." << Vast_VERSION_MINOR << std::endl;
+        std::cout << "Version: " << vast_VERSION_MAJOR << "." << vast_VERSION_MINOR << std::endl;
         parser.print_help();
         std::cout << "    --starwars             May the force be with you" << std::endl;
         exit(0);

@@ -1,2 +1,2 @@
-#define Vast_VERSION_MAJOR 1
-#define Vast_VERSION_MINOR 0
+#define vast_VERSION_MAJOR 1
+#define vast_VERSION_MINOR 0

@@ -1,14 +1,14 @@
-# Build + Run
+# Bazel Build + Run
 ```
 bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=200 -d=5
 ```
 
-# Build Requirements
+# Bazel Build Requirements
 
 * C++20 toolchain
 * https://bazel.build/
 
-# Help
+# Bazel Help
 ```
 ➜  vast git:(main) ✗ ./bazel-bin/vast -h
 Version: 1.0
@@ -31,6 +31,39 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=2 -d=2
 ```
 
 ![](images/r2d2.png)
+
+# CMake Build + Run
+
+```
+➜  vast git:(main) ✗ cmake . && cmake --build .
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/claytonjwong/sandbox/vast
+[ 12%] Building CXX object CMakeFiles/time_keeper.dir/time_keeper.cpp.o
+[ 25%] Linking CXX static library libtime_keeper.a
+[ 25%] Built target time_keeper
+[ 37%] Building CXX object CMakeFiles/truck.dir/truck.cpp.o
+[ 50%] Linking CXX static library libtruck.a
+[ 50%] Built target truck
+[ 62%] Building CXX object CMakeFiles/storage_station.dir/storage_station.cpp.o
+[ 75%] Linking CXX static library libstorage_station.a
+[ 75%] Built target storage_station
+[ 87%] Building CXX object CMakeFiles/vast.dir/main.cpp.o
+[100%] Linking CXX executable cmake-bin/vast
+[100%] Built target vast
+➜  vast git:(main) ✗ ./cmake-bin/vast -h
+Version: 1.0
+Usage: main [options...]
+Options:
+    -t, --trucks           Quantity of mining trucks (Required)
+    -q, --queues           Quantity of unloading queues (Required)
+    -r, --ratio            Time warp ratio (example: -r=2 is 2x speed) (Required)
+    -d, --duration         Simulation duration in hours (Required)
+    -h, --help             Shows this page
+    --starwars             May the force be with you
+```
 
 # Class Diagram
 
