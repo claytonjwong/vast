@@ -15,7 +15,11 @@ void storage_station::enqueue(const TruckPtr truck) {
     auto [best_size, best_index] = std::make_pair(1234567890, -1); // FIXME? large constant lib + best effort linear scan for minimum queue size (which is always changing)
     std::random_device rd;
     std::mt19937 gen{ rd() };
-    std::ranges::shuffle(_index, gen);
+    #if 202002L <= __cplusplus  // c++ 20 support
+        std::ranges::shuffle(_index, gen);
+    #else
+        std::shuffle(_index.begin(), _index.end(), gen);
+    #endif
     for (auto i: _index) {
         if (best_size > _queues[i]->size()) {
             best_size = _queues[i]->size(), best_index = i;
