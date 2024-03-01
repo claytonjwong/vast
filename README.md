@@ -35,7 +35,7 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=2 -d=2
 # CMake Build + Run
 
 ```
-➜  vast git:(main) ✗ cmake . && cmake --build .
+➜  vast git:(main) ✗ cmake . && cmake --build . && ./cmake-bin/vast -t=1 -q=1 -r=200 -d=5
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++
 -- Configuring done
@@ -53,6 +53,15 @@ bazel build :vast && ./bazel-bin/vast -t=1 -q=1 -r=2 -d=2
 [ 87%] Building CXX object CMakeFiles/vast.dir/main.cpp.o
 [100%] Linking CXX executable cmake-bin/vast
 [100%] Built target vast
+```
+
+# CMake Build Requirements
+
+* C++17 toolchain
+* https://cmake.org/
+
+# CMake Help
+```
 ➜  vast git:(main) ✗ ./cmake-bin/vast -h
 Version: 1.0
 Usage: main [options...]
