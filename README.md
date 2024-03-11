@@ -92,6 +92,13 @@ Options:
     --starwars             May the force be with you
 ```
 
+# CMake Clean Build + Run
+```
+rm Makefile CMakeCache.txt cmake_install.cmake &> /dev/null
+rm -r CMakeFiles cmake-bin &> /dev/null
+cmake . && cmake --build . && ./cmake-bin/vast -t=1 -q=1 -r=200 -d=5
+```
+
 # Class Diagram
 
 ![](images/Class.png)
