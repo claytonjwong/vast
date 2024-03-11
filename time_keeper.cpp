@@ -30,6 +30,6 @@ std::chrono::duration<double> time_keeper::getUnloadTime() const {
 std::chrono::hours time_keeper::_getMineTime() {
     std::uniform_int_distribution<int> distribution(MIN_MINE_TIME.count(), MAX_MINE_TIME.count());
     auto random = distribution(_generator);
-    logger::log(__LINE__, __FILE__, "⏰ _getMineTime() = ", random, " random hour(s) 🎲"); // TODO: FIXME provide per truck seed since its not so random right now, all trucks get the same deterministic values
+    logger::log(__LINE__, __FILE__, "⏰ _getMineTime() = ", random, " random hour(s) 🎲");
     return std::chrono::hours(random);
 }
