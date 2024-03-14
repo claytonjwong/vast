@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cassert>
+#include <numeric>
 #include <random>
 #include <sstream>
 #include <string>
@@ -13,7 +14,7 @@ storage_station::storage_station(const int truck_cnt, const int queue_cnt, const
 void storage_station::enqueue(const TruckPtr truck) {
     std::unique_lock<std::mutex> lock(m);
     logger::log(__LINE__, __FILE__, "🛰️ enqueuing truck to storage station");
-    auto [best_size, best_index] = std::make_pair(1234567890, -1); // FIXME? large constant lib + best effort linear scan for minimum queue size (which is always changing)
+    auto [best_size, best_index] = std::make_pair(std::numeric_limits<int>::max(), -1);
     std::random_device rd;
     std::mt19937 gen{ rd() };
     #if 202002L <= __cplusplus  // c++ 20 support
